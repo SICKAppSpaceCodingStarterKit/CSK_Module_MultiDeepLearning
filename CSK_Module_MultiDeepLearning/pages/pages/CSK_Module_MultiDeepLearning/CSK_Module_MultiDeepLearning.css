@@ -1,0 +1,15 @@
+.myViewer_CSK_Module_MultiDeepLearning > div > div {
+  max-height: 800px;
+  min-height: 800px;
+}
+
+.myCustomFrame_CSK_Module_MultiDeepLearning {
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  margin: 6px;
+}
+
+.myCustomSpacerVert10_CSK_Module_MultiDeepLearning {
+  min-height: 10px;
+}

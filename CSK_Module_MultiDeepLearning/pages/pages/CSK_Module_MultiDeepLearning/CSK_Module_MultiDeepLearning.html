@@ -1,0 +1,336 @@
+<layout-row id="RowLayout1" style="align-items:stretch">
+	<layout-column id="ColumnLayout1" style="align-items: stretch">
+		<stacked-view id="SV_Login" style="flex-grow: 1">
+			<stacked-pane id="SP_LoginOK" value="true" style="flex-grow: 1">
+				<layout-row id="RowLayout5" style="align-items: stretch">
+					<layout-column id="ColumnLayout4"
+						style="align-items: stretch; flex-grow: 3">
+						<sick-viewer2d id="Viewer2D1"
+							class="myViewer_CSK_Module_MultiDeepLearning" protocol="auto"
+							viewer-id="multiDeepLearningViewer1"
+							style="width: 100%; height: 100%">
+						</sick-viewer2d>
+					</layout-column>
+					<layout-column id="ColumnLayout5"
+						style="align-items: stretch; flex-grow: 2">
+						<layout-row id="RowLayout4" style="align-items: stretch">
+							<layout-column id="ColumnLayout2" style="align-items: stretch">
+								<davinci-tabs id="Tabs_Setup_Instances" type="modern">
+									<davinci-tab id="Tab_Setup" label="Settings">
+										<layout-column id="ColumnLayout3"
+											style="align-items: stretch; align-self: flex-start">
+											<layout-row id="RowLayout11"
+												style="justify-content: space-between; align-items: center">
+												<layout-column id="ColumnLayout33" style="align-items: stretch">
+												<davinci-value-display id="VD_InstanceSelection"
+													value="Selected DeepLearning Instance">
+												</davinci-value-display>
+												</layout-column>
+												<layout-column id="ColumnLayout22" style="align-items: stretch">
+												<davinci-drop-down id="DD_InstanceSelection">
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewSelectedInstance" update-on-resume
+													converter="function(value) {return value.toString();}">
+												</crown-edpws-binding>
+												<crown-edpws-binding property="data"
+													name="CSK_MultiDeepLearning/OnNewInstanceList" update-on-resume
+													converter="convertToList">
+												</crown-edpws-binding>
+												<crown-binding event="change" name="CSK_MultiDeepLearning/setInstance"
+													path="param/args/dnnInstance" auto-commit
+													converter="function(value) {return Number(value);}">
+												</crown-binding>
+												</davinci-drop-down>
+												</layout-column>
+											</layout-row>
+											<layout-row id="RowLayout6"
+												style="justify-content: space-between; align-items: center">
+												<layout-column id="ColumnLayout12" style="align-items: stretch">
+												<davinci-value-display id="VD_RegisteredEvent"
+													value="Registered on image event:"
+													title="Process images receiving from this event.">
+												</davinci-value-display>
+												</layout-column>
+												<layout-column id="ColumnLayout13" style="align-items: stretch">
+												<davinci-text-field id="TF_RegisteredEvent" type="text"
+													title="Process images receiving from this event."
+													style="flex-grow: 1">
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setRegisterEvent"
+													path="param/args/event" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewStatusRegisteredEvent"
+													update-on-resume>
+												</crown-edpws-binding>
+												</davinci-text-field>
+												</layout-column>
+											</layout-row>
+											<layout-row id="RowLayout3"
+												style="justify-content: space-between; align-items: center">
+												<davinci-value-display id="VD_ViewerActive" label="Viewer active:">
+												</davinci-value-display>
+												<davinci-toggle-switch id="TS_ViewerActive">
+												<crown-edpws-binding property="checked"
+													name="CSK_MultiDeepLearning/OnNewStatusShowImage"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setViewerActive"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												</davinci-toggle-switch>
+											</layout-row>
+											<layout-row id="Placeholder"
+												class="myCustomSpacerVert10_CSK_Module_MultiDeepLearning">
+											</layout-row>
+											<layout-row id="RowLayout8"
+												style="justify-content: space-between; align-items: center">
+												<davinci-value-display id="VD_ForwardImageWithResult"
+													label="Forward image with result:"
+													title="Use this to e.g. send result with image to FTP module">
+												</davinci-value-display>
+												<davinci-toggle-switch id="TS_ForwardImageWithResult"
+													title="Use this to e.g. send result with image to FTP module">
+												<crown-edpws-binding property="checked"
+													name="CSK_MultiDeepLearning/OnNewStatusForwardImage"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setForwardImage"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												</davinci-toggle-switch>
+											</layout-row>
+											<layout-row id="Placeholder2"
+												class="myCustomSpacerVert10_CSK_Module_MultiDeepLearning">
+											</layout-row>
+											<davinci-value-display id="VD_SelectedModel" label="Selected model:">
+											</davinci-value-display>
+											<davinci-drop-down id="DD_SelectedModel">
+												<crown-edpws-binding property="data"
+													name="CSK_MultiDeepLearning/OnNewModelList" update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setModelByName"
+													path="param/args/modelName" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewSelectedModel" update-on-resume>
+												</crown-edpws-binding>
+											</davinci-drop-down>
+											<davinci-value-display id="VD_ModelLabels" label="Model labels:">
+											</davinci-value-display>
+											<davinci-text-area id="TA_Label" style="flex-grow: 1">
+												<crown-on property="value"
+													crown-event="CSK_MultiDeepLearning/OnNewModelLabels">
+												</crown-on>
+											</davinci-text-area>
+											<davinci-value-display id="VD_ValidScore"
+												label="Minimum valid score:">
+											</davinci-value-display>
+											<davinci-numeric-field id="NF_ValidScore" type="outline" min="1"
+												max="100" ticks="1" group-separator="," decimal-separator="."
+												format-pattern="0">
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewValidScore" update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setValidScore" path="param/args/value"
+													auto-commit>
+												</crown-binding>
+											</davinci-numeric-field>
+											<davinci-value-display id="VD_MeasuredClass" label="Measured Class">
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewMeasuredClass" update-on-resume>
+												</crown-edpws-binding>
+											</davinci-value-display>
+											<layout-row id="RowLayout2" style="justify-content: space-between">
+												<davinci-value-display id="VD_MeasuredScore" label="Measured Score">
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewMeasuredScore" update-on-resume>
+												</crown-edpws-binding>
+												</davinci-value-display>
+												<davinci-status-indicator id="StatusIndicator_Result">
+												<crown-edpws-binding property="status"
+													name="CSK_MultiDeepLearning/OnNewResult" update-on-resume>
+												</crown-edpws-binding>
+												</davinci-status-indicator>
+											</layout-row>
+											<appspace-file-download-button id="FileDownloadButton_DnnModel"
+												type="primary" icon-position="append"
+												downloaded-filename="file.tmp">
+												<crown-edpws-binding property="filePath"
+													name="CSK_MultiDeepLearning/OnNewModelFilename" update-on-resume>
+												</crown-edpws-binding>
+												<crown-edpws-binding property="downloadedFilename"
+													name="CSK_MultiDeepLearning/OnNewSelectedModel" update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="finished"
+													name="CSK_MultiDeepLearning/downloadFromDevice"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												<span>Download model from device</span>
+											</appspace-file-download-button>
+											<appspace-file-upload-button id="FileUploadButton_DnnModel"
+												button-type="primary">
+												<crown-binding event="finished"
+													name="CSK_MultiDeepLearning/uploadFinished"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												<span>Upload model to device</span>
+												<crown-edpws-binding property="path"
+													name="CSK_MultiDeepLearning/OnNewUploadPath" update-on-resume>
+												</crown-edpws-binding>
+											</appspace-file-upload-button>
+										</layout-column>
+									</davinci-tab>
+									<davinci-tab id="Tab_Instances" label="Instances">
+										<layout-column id="ColumnLayout8" style="align-items: stretch">
+											<layout-row id="RowLayout7"
+												style="justify-content: space-between; align-items: center">
+												<layout-column id="ColumnLayout9" style="align-items: stretch">
+												<davinci-value-display id="VD_NumberOfInstances"
+													value="Number of instances">
+												</davinci-value-display>
+												</layout-column>
+												<layout-column id="ColumnLayout10" style="align-items: stretch">
+												<davinci-text-field id="TF_NumberOfInstances" type="text" readonly
+													disabled>
+												<crown-on property="value"
+													crown-event="CSK_MultiDeepLearning/OnNewNumberOfInstances">
+												</crown-on>
+												</davinci-text-field>
+												</layout-column>
+											</layout-row>
+											<layout-column id="ColumnLayout61" style="align-items: stretch">
+												<davinci-button id="Button_AddInstance" type="primary"
+													icon-position="append">
+												<span>Add instance</span>
+												<crown-binding event="submit" name="CSK_MultiDeepLearning/addInstance"
+													auto-commit>
+												</crown-binding>
+												</davinci-button>
+												<davinci-button id="Button_ResetInstances" type="primary"
+													icon-position="append">
+												<span>Reset instances</span>
+												<crown-binding event="submit"
+													name="CSK_MultiDeepLearning/resetInstances" auto-commit>
+												</crown-binding>
+												</davinci-button>
+											</layout-column>
+										</layout-column>
+									</davinci-tab>
+								</davinci-tabs>
+								<layout-column id="Column_PersistentData"
+									class="myCustomFrame_CSK_Module_MultiDeepLearning"
+									style="align-items: stretch; justify-content: flex-end; flex-grow: 0">
+									<layout-row id="RowLayout31" style="align-items: flex-end">
+										<layout-column id="ColumnLayout7"
+											style="justify-content: center; align-items: stretch">
+											<davinci-value-display id="VD_ParameterName" value="Parameter Name:"
+												title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
+											</davinci-value-display>
+										</layout-column>
+										<layout-column id="ColumnLayout20"
+											style="flex-grow: 2; align-items: stretch">
+											<davinci-text-field id="TF_ParameterName" type="text"
+												title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewParameterName" update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setParameterName"
+													path="param/args/name" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MultiDeepLearning/OnPersistentDataModuleAvailable"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+											</davinci-text-field>
+										</layout-column>
+									</layout-row>
+									<layout-row id="RowLayout12" style="align-items: flex-end">
+										<layout-column id="ColumnLayout21"
+											style="justify-content: center; align-items: stretch">
+											<davinci-checkbox id="CB_LoadConfig"
+												title="Load configured parameters from CSK_PersistentData on app start.">
+												<span>Load on reboot</span>
+												<crown-edpws-binding property="checked"
+													name="CSK_MultiDeepLearning/OnNewStatusLoadParameterOnReboot"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MultiDeepLearning/OnPersistentDataModuleAvailable"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setLoadOnReboot"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+											</davinci-checkbox>
+										</layout-column>
+										<layout-column id="ColumnLayout18"
+											style="align-items: stretch; justify-content: flex-end">
+											<davinci-button id="B_LoadConfig" type="primary"
+												icon-position="append"
+												title="Load configured parameters from CSK_PersistentData module.">
+												<span>Load Config</span>
+												<crown-binding event="submit"
+													name="CSK_MultiDeepLearning/loadParameters" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MultiDeepLearning/OnPersistentDataModuleAvailable"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+											</davinci-button>
+										</layout-column>
+										<layout-column id="ColumnLayout6"
+											style="align-items: stretch; justify-content: flex-end">
+											<davinci-button id="B_SaveConfig" type="primary"
+												icon-position="append"
+												title="Save current configured parameters of this module within CSK_PersistentData module.">
+												<span>Save Config</span>
+												<crown-binding event="submit"
+													name="CSK_MultiDeepLearning/sendParameters" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MultiDeepLearning/OnPersistentDataModuleAvailable"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+											</davinci-button>
+										</layout-column>
+									</layout-row>
+								</layout-column>
+							</layout-column>
+						</layout-row>
+					</layout-column>
+				</layout-row>
+			</stacked-pane>
+			<stacked-pane id="SP_LoginNOK" value="false">
+				<layout-column id="ColumnLayout11" style="align-items: stretch">
+					<davinci-callout id="Callout1" type="info">
+						<span>
+							Please login with user level Maintenance to see this page.
+						</span>
+					</davinci-callout>
+				</layout-column>
+			</stacked-pane>
+			<crown-edpws-binding property="value"
+				name="CSK_MultiDeepLearning/OnUserLevelMaintenanceActive"
+				update-on-resume
+				converter="function(value) {return value.toString();}">
+			</crown-edpws-binding>
+		</stacked-view>
+		<stacked-view id="SV_PageCalled">
+			<crown-binding property="value"
+				name="CSK_MultiDeepLearning/pageCalled" path="result/data/empty"
+				auto-update="0" update-on-resume>
+			</crown-binding>
+			<crown-edpws-binding property="value"
+				name="CSK_MultiDeepLearning/OnNewViewerID" update-on-resume
+				converter="changeID">
+			</crown-edpws-binding>
+		</stacked-view>
+	</layout-column>
+</layout-row>

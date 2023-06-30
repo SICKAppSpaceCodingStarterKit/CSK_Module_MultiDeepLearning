@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest>
+    <application name="CSK_Module_MultiDeepLearning">
+        <crown name="CSK_Module_MultiDeepLearning">
+            <desc>This is an automatically generated CROWN (description not necessary).</desc>
+        </crown>
+        <crown name="CSK_MultiDeepLearning">
+            <trait>released</trait>
+            <desc>Module to provide DeepLearning functionality. Multiple instances can be created and will run in multiple threads on the device. +
+This module provides a UI for most relevant features. +
+{empty} + 
+Typically to configure this module to work with other modules you should do this: +
+{empty} + 
+1) If multiple instances are needed, these can be added via addInstance() +
+2) Select the interface you want to configur via setInstance() +
+3) Set the event providing the images to be processed e.g. via setRegisterEvent('CSK_ImagePlayer.OnNewImage') +
+4) Other modules can react on the results of this module (see OnNewResultNUM and OnNewFullResultWithImageNUM) +</desc>
+            <serves>
+                <event name="OnNewModelList">
+                    <desc>Notify list of available models.</desc>
+                    <param desc="List of models." multiplicity="+" name="list" type="string"/>
+                </event>
+                <event name="OnNewSelectedModel">
+                    <desc>Notify currently selected DNN model.</desc>
+                    <param desc="Model" multiplicity="1" name="model" type="string"/>
+                </event>
+                <event name="OnNewModelFilename">
+                    <desc>Notify currently set model filename.</desc>
+                    <param desc="Filename" multiplicity="1" name="filename" type="string"/>
+                </event>
+                <event name="OnNewModelLabels">
+                    <desc>Notify labels of the currently set model.</desc>
+                    <param desc="Labels" multiplicity="1" name="labels" type="string"/>
+                </event>
+                <event name="OnNewMeasuredClassNUM">
+                    <desc>Example of dynamically created event to notify measured class of instance. +
+NUM will be replaced by the number of instance (e.g. "OnNewMeasuredClass1"). +
+INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
+                    <param desc="Class" multiplicity="1" name="class" type="string"/>
+                </event>
+                <event name="OnNewMeasuredScoreNUM">
+                    <desc>Example of dynamically created event to notify measured score of instance. +
+NUM will be replaced by the number of instance (e.g. "OnNewMeasuredScore1"). +
+INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
+                    <param desc="Score" multiplicity="1" name="score" type="string"/>
+                </event>
+                <event name="OnNewResultNUM">
+                    <desc>Example of dynamically created event to notify measured result of instance. +
+NUM will be replaced by the number of instance (e.g. "OnNewResult1"). +
+INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
+                    <param desc="Result" multiplicity="1" name="result" type="bool"/>
+                </event>
+                <event name="OnNewValidScore">
+                    <desc>Notify currently set score to be valid.</desc>
+                    <param desc="Score" multiplicity="1" name="score" type="int"/>
+                </event>
+                <event name="OnNewStatusShowImage">
+                    <desc>Notify status if image should be shown in UI viewer of this module.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewSelectedInstance">
+                    <desc>Notify selected instance.</desc>
+                    <param desc="Selected instance" multiplicity="1" name="selectedDeepLearning" type="int"/>
+                </event>
+                <event name="OnNewImageProcessingParameter">
+                    <desc>Event to share processing parameters to the instances.</desc>
+                    <param desc="Number of the instance to receive the parameter." multiplicity="1" name="instanceNo" type="int"/>
+                    <param desc="Name of the parameter." multiplicity="1" name="parameter" type="string"/>
+                    <param desc="Value to set." multiplicity="1" name="value" type="auto"/>
+                </event>
+                <event name="OnNewMeasuredClass">
+                    <desc>Notify measured class of currently selected instance.</desc>
+                    <param desc="Class" multiplicity="1" name="class" type="string"/>
+                </event>
+                <event name="OnNewMeasuredScore">
+                    <desc>Notify measured score of currently selected instance.</desc>
+                    <param desc="Score" multiplicity="1" name="score" type="string"/>
+                </event>
+                <event name="OnNewResult">
+                    <desc>Notify result of currently selected instance.</desc>
+                    <param desc="Result" multiplicity="1" name="result" type="bool"/>
+                </event>
+                <event name="TestImage">
+                    <desc>Internal test event to provide an image to process (as an example).</desc>
+                    <param alias="Image" desc="Image to process" multiplicity="1" name="img" type="object"/>
+                </event>
+                <event name="OnPersistentDataModuleAvailable">
+                    <desc>Notify status if features of CSK_PersistentData module are available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusLoadParameterOnReboot">
+                    <desc>Notify status if parameters should be loaded on app/device boot up.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnDataLoadedOnReboot">
+                    <desc>Event to call if module tried to load parameters and should be ready.</desc>
+                </event>
+                <event name="OnNewUploadPath">
+                    <desc>Notify upload path for the models.</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </event>
+                <event name="OnNewInstanceList">
+                    <desc>Notify list of created instances.</desc>
+                    <param desc="List of instances" multiplicity="1" name="list" type="string"/>
+                </event>
+                <event name="OnUserLevelOperatorActive">
+                    <trait>released</trait>
+                    <desc>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status of Operator userlevel." multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelMaintenanceActive">
+                    <trait>released</trait>
+                    <desc>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status of Maintenance userlevel." multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelServiceActive">
+                    <trait>released</trait>
+                    <desc>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status of Service userlevel." multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelAdminActive">
+                    <desc>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status of Admin userlevel." multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewValueToForwardNUM">
+                    <desc>Example of dynamically created event to Forward thread internal values to e.g. be notified with single event related to UI. +
+NUM will be replaced by the number of instance (e.g. "OnNewValueToForward1"). +
+INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
+                    <param desc="Related, general event." multiplicity="1" name="event" type="string"/>
+                    <param desc="Value to notify." multiplicity="1" name="value" type="auto"/>
+                </event>
+                <event name="OnNewParameterName">
+                    <desc>Notify name of the parameters if saved/loaded via the CSK_PersistentData module for currently selected camera instance.</desc>
+                    <param desc="Name" multiplicity="1" name="parametersName" type="string"/>
+                </event>
+                <event name="OnNewNumberOfInstances">
+                    <desc>Notifies about the number of instances.</desc>
+                    <param desc="Number of instances." multiplicity="1" name="numberOfInstances" type="string"/>
+                </event>
+                <event name="OnNewStatusRegisteredEvent">
+                    <desc>Notify event instance is registered to receive new image to process.</desc>
+                    <param desc="Name of event." multiplicity="1" name="eventname" type="string"/>
+                </event>
+                <event name="OnNewStatusForwardImage">
+                    <desc>Notify if image should be forwarded with result.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewViewerID">
+                    <desc>Notify currently used viewerID (e.g. to show correct viewer in UI).</desc>
+                    <param desc="viewerID" multiplicity="1" name="viewerID" type="string"/>
+                </event>
+                <event name="OnNewFullResultWithImageNUM">
+                    <desc>Example of dynamically created event to notify measured result incl. class name and score of instance incl. the image. +
+NUM will be replaced by the number of instance (e.g. "OnNewResultWithImage1"). +
+INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
+                    <param desc="Result" multiplicity="1" name="result" type="bool"/>
+                    <param desc="Class" multiplicity="1" name="class" type="string"/>
+                    <param desc="Score" multiplicity="1" name="score" type="float"/>
+                    <param alias="Image" desc="Image" multiplicity="1" name="img" type="object"/>
+                </event>
+                <function name="pageCalled">
+                    <desc>Function to register "OnResume" of the module UI (only as helper function).</desc>
+                    <return desc="Empty string (only needed to simplify binding)." multiplicity="1" name="empty" type="string"/>
+                </function>
+                <function name="uploadFinished">
+                    <desc>Upload of models to device finished.</desc>
+                    <param desc="Status of success." multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setModelByName">
+                    <desc>Set DNN model to use.</desc>
+                    <param desc="Model name" multiplicity="1" name="modelName" type="string"/>
+                </function>
+                <function name="downloadFromDevice">
+                    <desc>Download models from device.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setValidScore">
+                    <desc>Set the value of a score to be a valid result.</desc>
+                    <param desc="Acceptable value." multiplicity="1" name="value" type="int"/>
+                </function>
+                <function name="setViewerActive">
+                    <desc>Set if viewer on UI should display the image.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="processImageNUM">
+                    <desc>Example of dynamically served function to process DNN on an image. +
+NUM will be replaced by the number of instance (e.g. "processImage1"). +
+INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
+Needs then to be called via "Script.callFunction()" (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu) +</desc>
+                    <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
+                    <return desc="Result score acceptable." multiplicity="?" name="validScore" type="bool"/>
+                    <return desc="Score result." multiplicity="?" name="score" type="float"/>
+                    <return desc="Result class." multiplicity="?" name="class" type="string"/>
+                </function>
+                <function name="sendParameters">
+                    <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
+                </function>
+                <function name="setParameterName">
+                    <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
+                    <param desc="Name of the parameter." multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="loadParameters">
+                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
+                </function>
+                <function name="setRegisterEvent">
+                    <desc>Set event to listen for incoming images to process. Will be set for currently selected instance (see "setInstance").</desc>
+                    <param desc="Event name to register to." multiplicity="1" name="event" type="string"/>
+                </function>
+                <function name="setLoadOnReboot">
+                    <desc>Configure if this module should load its saved parameters at app/device boot up.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="getInstancesAmount">
+                    <desc>Get amount of created DeepLearning instances.</desc>
+                    <return desc="Amount" multiplicity="1" name="amount" type="int"/>
+                </function>
+                <function name="processImageWithScoresNUM">
+                    <desc>Example of dynamically served function to process DNN on an image and return the scores for each class. +
+NUM will be replaced by the number of instance (e.g. "processImageWithScores1"). +
+INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
+Needs then to be called via "Script.callFunction()"  (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu). +</desc>
+                    <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
+                    <param desc="Sort results by descending score instead of class number." multiplicity="1" name="sorted" type="bool"/>
+                    <return desc="Result score acceptable." multiplicity="[?*]" name="validScore" type="bool"/>
+                    <return desc="Scores for each class as array (sorted by class number per default)." multiplicity="[?*]" name="score" type="float"/>
+                    <return desc="Names of each class as a table (sorted by class number per default)." multiplicity="[?*]" name="class" type="string"/>
+                </function>
+                <function name="addInstance">
+                    <desc>Function to add an additional deepLearning instance.</desc>
+                </function>
+                <function name="resetInstances">
+                    <desc>Function to reset instances to one single instance. +
+IMPORTANT: As instances start their own threads, the module needs to be restarted if new instances are needed... (see AppEngine docu for "Script.startScript").</desc>
+                </function>
+                <function name="setInstance">
+                    <desc>Set instance to select.</desc>
+                    <param desc="Single instance to select." multiplicity="1" name="dnnInstance" type="int"/>
+                </function>
+                <function name="setForwardImage">
+                    <desc>Functin to set if the image incl. result should be forwarded after processing.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+            </serves>
+        </crown>
+        <meta key="author">SICK AG</meta>
+        <meta key="version">4.0.0</meta>
+        <meta key="priority">low</meta>
+        <meta key="copy-protected">false</meta>
+        <meta key="read-protected">false</meta>
+        <meta key="crown2-flow-engine">false</meta>
+        <meta key="LuaLoadAllEngineAPI">false</meta>
+        <entry default="CSK_Module_MultiDeepLearning.lua" path="scripts"/>
+    </application>
+</manifest>
