@@ -56,6 +56,8 @@ function multiDeepLearning.create(deepLearningInstanceNo)
   self.parameters.validScore = 80 -- Score to decide if image is from a class
   self.parameters.showImage = false -- Show image on UI
   self.parameters.forwardResultWithImage = false -- Forward image incl. processing result
+  self.parameters.processWithScores = false -- Return the scores for all classes in the processing result
+  self.parameters.sortResultByIndex = false -- Sort processing result by class index instead of highest score
   self.parameters.registeredEvent = 'e.g. CSK_MultiRemoteCamera.OnNewImageCamera' .. self.deepLearningInstanceNoString -- Event to register to get images to process
   self.parameters.processingFile = 'MultiDeepLearning_Processing' -- Script to use for processing in thread
 
@@ -68,6 +70,8 @@ function multiDeepLearning.create(deepLearningInstanceNo)
   self.multiDeepLearningProcessingParams:add('validScore', self.parameters.validScore, "INT")
   self.multiDeepLearningProcessingParams:add('registeredEvent', self.parameters.registeredEvent, "STRING")
   self.multiDeepLearningProcessingParams:add('forwardResultWithImage', self.parameters.forwardResultWithImage, "BOOL")
+  self.multiDeepLearningProcessingParams:add('processWithScores', self.parameters.processWithScores, "BOOL")
+  self.multiDeepLearningProcessingParams:add('sortResultByIndex', self.parameters.sortResultByIndex, "BOOL")
 
   --Check if path of 'self.parameters.modelPath' is available on the device and if models are inside.
   if File.isdir(self.parameters.modelPath) then

@@ -105,6 +105,60 @@
 											<layout-row id="Placeholder2"
 												class="myCustomSpacerVert10_CSK_Module_MultiDeepLearning">
 											</layout-row>
+											<stacked-view id="SV_Service" style="flex-grow: 1">
+												<stacked-pane id="SP_ServiceOK" value="true" style="flex-grow: 1">
+												<layout-column id="ColumnLayout14"
+													style="align-items: stretch; align-self: flex-start">
+												<layout-row id="RowLayout9"
+													style="justify-content: space-between; align-items: center">
+												<davinci-value-display id="VD_ProcessWithScores"
+													label="Return scores for all classes"
+													title="Use this to get the scores for all classes">
+												</davinci-value-display>
+												<davinci-toggle-switch id="TS_ProcessWithScores"
+													title="Use this to return the scores for all classes">
+												<crown-edpws-binding property="checked"
+													name="CSK_MultiDeepLearning/OnNewStatusForwardImage"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setForwardImage"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												</davinci-toggle-switch>
+												</layout-row>
+												<layout-row id="Placeholder3"
+													class="myCustomSpacerVert10_CSK_Module_MultiDeepLearning">
+												</layout-row>
+												<layout-row id="RowLayout10"
+													style="justify-content: space-between; align-items: center">
+												<davinci-value-display id="VD_SortResultByIndex"
+													label="Sort results by class index"
+													title="Use this to sort the results by class index instead of highest score">
+												</davinci-value-display>
+												<davinci-toggle-switch id="TS_SortResultByIndex"
+													title="Use this to sort the results by class index instead of highest score">
+												<crown-edpws-binding property="checked"
+													name="CSK_MultiDeepLearning/OnNewStatusForwardImage"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setForwardImage"
+													path="param/args/status" auto-commit>
+												</crown-binding>
+												</davinci-toggle-switch>
+												</layout-row>
+												<layout-row id="RowLayout13"
+													class="myCustomSpacerVert10_CSK_Module_MultiDeepLearning">
+												</layout-row>
+												</layout-column>
+												</stacked-pane>
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnUserLevelServiceActive"
+													update-on-resume
+													converter="function(value) {return value.toString();}">
+												</crown-edpws-binding>
+											</stacked-view>
 											<davinci-value-display id="VD_SelectedModel" label="Selected model:">
 											</davinci-value-display>
 											<davinci-drop-down id="DD_SelectedModel">

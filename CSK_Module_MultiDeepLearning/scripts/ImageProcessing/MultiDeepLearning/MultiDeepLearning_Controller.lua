@@ -61,6 +61,8 @@ Script.serveEvent("CSK_MultiDeepLearning.OnPersistentDataModuleAvailable", "Mult
 Script.serveEvent("CSK_MultiDeepLearning.OnNewStatusLoadParameterOnReboot", "MultiDeepLearning_OnNewStatusLoadParameterOnReboot")
 Script.serveEvent("CSK_MultiDeepLearning.OnDataLoadedOnReboot", "MultiDeepLearning_OnDataLoadedOnReboot")
 Script.serveEvent("CSK_MultiDeepLearning.OnNewUploadPath", "MultiDeepLearning_OnNewUploadPath")
+Script.serveEvent('CSK_MultiDeepLearning.OnNewStatusProcessWithScores', 'MultiDeepLearning_OnNewStatusProcessWithScores')
+Script.serveEvent('CSK_MultiDeepLearning.OnNewStatusSortResultByIndex', 'MultiDeepLearning_OnNewStatusSortResultByIndex')
 
 Script.serveEvent("CSK_MultiDeepLearning.OnUserLevelOperatorActive", "MultiDeepLearning_OnUserLevelOperatorActive")
 Script.serveEvent("CSK_MultiDeepLearning.OnUserLevelMaintenanceActive", "MultiDeepLearning_OnUserLevelMaintenanceActive")
@@ -189,6 +191,8 @@ local function handleOnExpiredTmrMultiDeepLearning()
   Script.notifyEvent("MultiDeepLearning_OnNewStatusShowImage", multiDeepLearning_Instances[selectedInstance].parameters.showImage)
   Script.notifyEvent("MultiDeepLearning_OnNewViewerID", 'multiDeepLearningViewer' .. tostring(selectedInstance))
   Script.notifyEvent("MultiDeepLearning_OnNewStatusForwardImage", multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage)
+  Script.notifyEvent("MultiDeepLearning_OnNewStatusProcessWithScores", multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
+  Script.notifyEvent("MultiDeepLearning_OnNewStatusSortResultByIndex", multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex)
 
   Script.notifyEvent("MultiDeepLearning_OnNewValidScore", multiDeepLearning_Instances[selectedInstance].parameters.validScore)
   Script.notifyEvent("MultiDeepLearning_OnNewUploadPath", multiDeepLearning_Instances[selectedInstance].parameters.modelPath)
@@ -314,12 +318,31 @@ local function setForwardImage(status)
 end
 Script.serveFunction('CSK_MultiDeepLearning.setForwardImage', setForwardImage)
 
+---@param status bool
+local function setProcessWithScores(status)
+  _G.logger:info(nameOfModule .. ": Set processWithScores to = " ..  tostring(status))
+  multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = status
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', status)
+end
+Script.serveFunction('CSK_MultiDeepLearning.setProcessWithScores', setProcessWithScores)
+
+---@param status bool
+local function setSortResultByIndex(status)
+  _G.logger:info(nameOfModule .. ": Set sortResultByIndex to = " ..  tostring(status))
+  multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex = status
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'sortResultByIndex', status)
+end
+Script.serveFunction('CSK_MultiDeepLearning.setSortResultByIndex', setSortResultByIndex)
+
 --- Function to update processing parameters within the processing threads
 local function updateProcessingParameters()
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'showImage', multiDeepLearning_Instances[selectedInstance].parameters.showImage)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'validScore', multiDeepLearning_Instances[selectedInstance].parameters.validScore)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'fullModelPath', multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. multiDeepLearning_Instances[selectedInstance].parameters.modelName)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'registeredEvent', multiDeepLearning_Instances[selectedInstance].parameters.registeredEvent)
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'forwardResultWithImage',  multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage)
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores',  multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'sortResultByIndex',  multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex)
 end
 
 -- *****************************************************************

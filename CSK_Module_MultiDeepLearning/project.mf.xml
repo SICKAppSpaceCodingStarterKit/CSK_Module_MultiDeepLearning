@@ -154,9 +154,18 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 NUM will be replaced by the number of instance (e.g. "OnNewResultWithImage1"). +
 INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
                     <param desc="Result" multiplicity="1" name="result" type="bool"/>
-                    <param desc="Class" multiplicity="1" name="class" type="string"/>
-                    <param desc="Score" multiplicity="1" name="score" type="float"/>
+                    <param desc="Class" multiplicity="[1+]" name="class" type="string"/>
+                    <param desc="Score" multiplicity="[1+]" name="score" type="float"/>
                     <param alias="Image" desc="Image" multiplicity="1" name="img" type="object"/>
+                </event>
+                <event name="OnNewStatusProcessWithScores">
+                    <trait>released</trait>
+                    <desc>Notify if the scores for all classes should be returned in the processing result</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusSortResultByIndex">
+                    <desc>Notify if the processing result should be sorted by class index instead of highest score</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
                 <function name="pageCalled">
                     <desc>Function to register "OnResume" of the module UI (only as helper function).</desc>
@@ -240,10 +249,18 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                     <desc>Functin to set if the image incl. result should be forwarded after processing.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </function>
+                <function name="setProcessWithScores">
+                    <desc>Function to set if the scores for all classes should be returned in the processing result</desc>
+                    <param desc="" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setSortResultByIndex">
+                    <desc>Function to set if the processing result should be sorted by class index instead of highest score</desc>
+                    <param desc="" multiplicity="1" name="status" type="bool"/>
+                </function>
             </serves>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">4.0.0</meta>
+        <meta key="version">4.1.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
