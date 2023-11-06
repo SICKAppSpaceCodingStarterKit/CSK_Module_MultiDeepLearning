@@ -34,6 +34,24 @@ imageProcessingParams.sortResultByIndex = scriptParams:get('sortResultByIndex')
 
 local viewer = View.create(viewerID)
 
+-- Get SIM type
+local typeName = Engine.getTypeName() -- Full device typename of current used device
+local  firmwareVersion =  Engine.getFirmwareVersion() -- Firmware version of current used device
+local deviceType = '' -- Reduced device typename of current used device
+
+if typeName == 'AppStudioEmulator' or typeName == 'SICK AppEngine' then
+  deviceType = 'AppStudioEmulator'
+else
+  deviceType = string.sub(typeName, 1, 7)
+end
+
+local function firmwareNotAllowed (firmware)
+  if firmware == "2.1.0" or firmware == "2.2.0" or firmware == "2.2.1" then
+    return false
+  else
+    return true
+  end
+end
 --- Function to sort results by class index instead of highest score
 ---@param input any Results
 ---@param idx any Index
@@ -107,9 +125,14 @@ end
 Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image', 'bool:?, float:?,string:?')
 
 -- Function to process incoming images with DNN (returns all scores)
--- SIM1012 firmware must be at least FW2.1.0 otherwise the device crahses without errors!
 local function handleOnNewImageProcessingScores(image)
-   
+
+  -- Return here if we are running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
+  if deviceType == "SIM1012" and firmwareNotAllowed(firmwareVersion) then
+    _G.logger:info(nameOfModule .. ': Can not run handleOnNewImageProcessingScores() with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
+    return false, nil, nil
+  end
+
   _G.logger:info(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
   if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
     viewer:addImage(image)
@@ -168,7 +191,7 @@ local function handleOnNewImageProcessingScores(image)
       end
       return false, score, class
     end
-    
+
   else
     _G.logger:info(nameOfModule .. ": No results available")
     Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, 'noClass', 0.0, image)
