@@ -8,7 +8,7 @@ Module to setup single or multiple DeepLearning processing threads.
 
 The app includes an intuitive GUI to upload/download DNN models and to edit configuration.
 Processing can be triggered via event (needs to be registered) or as function call. See sample inside of the code.
-For further information check out the [documentation](https://raw.githack.com/SICKAppSpaceCodingStarterKit/CSK_Module_MultiDeepLearning/main/CSK_Module_MultiDeepLearning.html) in the folder "docu".
+For further information check out the [documentation](https://raw.githack.com/SICKAppSpaceCodingStarterKit/CSK_Module_MultiDeepLearning/main/docu/CSK_Module_MultiDeepLearning.html) in the folder "docu".
 
 ## Known issues
 - 'handleOnNewImageProcessingScores' not supported on SIM1012 with firmware versions other than [2.1.0, 2.2.0, 2.2.1]
