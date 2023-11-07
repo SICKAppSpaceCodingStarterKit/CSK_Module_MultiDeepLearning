@@ -83,8 +83,36 @@ local function handleOnNewImageProcessing(image)
   local result = dnn:predict()
 
   if result then
-    local index, score, class = result:getAsClassification(true)
-    score = score*100
+    local indexArray, scoreArray, classArray
+    local index, score, class
+
+    if imageProcessingParams.processWithScores then
+      -- Stop processing here if running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
+      if deviceType == "SIM1012" and firmwareNotAllowed(firmwareVersion) then
+        _G.logger:warning(nameOfModule .. ': Can not prossess all scores with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
+        return false, nil, nil
+      end
+
+      local model = dnn:getModel()
+      local noClasses = #model:getOutputNodeLabels()
+      indexArray, scoreArray, classArray = result:getAsClassification(noClasses,true)
+      for i=1, noClasses do
+        scoreArray[i] = scoreArray[i]*100
+      end
+      index = indexArray[1]
+      score = scoreArray[1]
+      class = classArray[1]
+
+      if imageProcessingParams.sortResultByIndex then
+        scoreArray = sortResultByIndex(scoreArray, indexArray)
+        classArray = sortResultByIndex(classArray, indexArray)
+      end
+
+    else
+      index, score, class = result:getAsClassification(true)
+      score = score*100
+    end
+
     _G.logger:info(string.format("Image on DeepLearning" .. deepLearningInstanceNumberString .. " was classified as class number %i: %s with %0.1f %% confidence", index, class, score))
     Script.notifyEvent('MultiDeepLearning_OnNewMeasuredClass'.. deepLearningInstanceNumberString, class)
     Script.notifyEvent('MultiDeepLearning_OnNewMeasuredScore'.. deepLearningInstanceNumberString, string.format('%0.1f', score))
@@ -97,22 +125,38 @@ local function handleOnNewImageProcessing(image)
     if score >= imageProcessingParams.validScore then
       Script.notifyEvent('MultiDeepLearning_OnNewResult'.. deepLearningInstanceNumberString, true)
       if imageProcessingParams.forwardResultWithImage then
-        Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, true, class, score, image)
+        if imageProcessingParams.processWithScores then
+            Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, true, classArray, scoreArray, image)
+          else
+            Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, true, class, score, image)
+        end
       end
       if imageProcessingParams.activeInUI then
         Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', true)
       end
-      return true, score, class
 
+      if imageProcessingParams.processWithScores then
+        return true, scoreArray, classArray
+      else
+        return true, score, class
+      end
     else
       Script.notifyEvent('MultiDeepLearning_OnNewResult'.. deepLearningInstanceNumberString, false)
       if imageProcessingParams.forwardResultWithImage then
-        Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, class, score, image)
+        if imageProcessingParams.processWithScores then
+          Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, classArray, scoreArray, image)
+        else
+          Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, class, score, image)
+      end
       end
       if imageProcessingParams.activeInUI then
         Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', false)
       end
-      return false, score, class
+      if imageProcessingParams.processWithScores then
+        return false, scoreArray, classArray
+      else
+        return false, score, class
+      end
     end
   else
     Script.notifyEvent('MultiDeepLearning_OnNewResult'.. deepLearningInstanceNumberString, false)
@@ -126,83 +170,7 @@ local function handleOnNewImageProcessing(image)
     return false, nil, nil
   end
 end
-Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image', 'bool:?, float:?,string:?')
-
--- Function to process incoming images with DNN (returns all scores)
-local function handleOnNewImageProcessingScores(image)
-
-  -- Stop processing here if running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
-  if deviceType == "SIM1012" and firmwareNotAllowed(firmwareVersion) then
-    _G.logger:warning(nameOfModule .. ': Can not run handleOnNewImageProcessingScores() with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
-    return false, nil, nil
-  end
-
-  _G.logger:fine(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
-  if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
-    viewer:addImage(image)
-    viewer:present("LIVE")
-  end
-
-  local model = dnn:getModel()
-  local noClasses = #model:getOutputNodeLabels()
-  _G.logger:info(nameOfModule .. ': Number of result classes:' .. noClasses)
-  dnn:setInputImage(image)
-  local result = dnn:predict()
-
-
-  if result then
-    local index, score, class = result:getAsClassification(noClasses,true)
-
-    for i=1, noClasses do
-      score[i] = score[i]*100
-    end
-
-    _G.logger:info(string.format("Image on DeepLearning" .. deepLearningInstanceNumberString .. " best class was number %i: %s with %0.1f %% confidence", index[1], class[1], score[1]))
-    Script.notifyEvent('MultiDeepLearning_OnNewMeasuredClass'.. deepLearningInstanceNumberString, class[1])
-    Script.notifyEvent('MultiDeepLearning_OnNewMeasuredScore'.. deepLearningInstanceNumberString, string.format('%0.1f', score[1]))
-
-
-    if imageProcessingParams.activeInUI then
-      Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewMeasuredClass', class[1])
-      Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewMeasuredScore', string.format('%0.1f', score[1]))
-    end
-
-    if score[1] >= imageProcessingParams.validScore then
-      Script.notifyEvent('MultiDeepLearning_OnNewResult'.. deepLearningInstanceNumberString, true)
-      if imageProcessingParams.forwardResultWithImage then
-        if imageProcessingParams.sortResultByIndex then
-          score = sortResultByIndex(score, index)
-          class = sortResultByIndex(class, index)
-        end
-        Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, true, class, score, image)
-      end
-      if imageProcessingParams.activeInUI then
-        Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', true)
-      end
-      return true, score, class
-
-    else
-      Script.notifyEvent('MultiDeepLearning_OnNewResult'.. deepLearningInstanceNumberString, false)
-      if imageProcessingParams.forwardResultWithImage then
-        if imageProcessingParams.sortResultByIndex then
-          score = sortResultByIndex(score, index)
-          class = sortResultByIndex(class, index)
-        end
-        Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, class, score, image)
-      end
-      if imageProcessingParams.activeInUI then
-        Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', false)
-      end
-      return false, score, class
-    end
-
-  else
-    _G.logger:info(nameOfModule .. ": No results available")
-    Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, 'noClass', 0.0, image)
-    return false, nil, nil
-  end
-end
-Script.serveFunction("CSK_MultiDeepLearning.processImageWithScores"..deepLearningInstanceNumberString, handleOnNewImageProcessingScores, 'object:1:Image, bool:1', 'bool:?,float:[?*],string:[?*]')
+Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image, bool:1', 'bool:?,float:[?*],string:[?*]')
 
 --- Function to handle updates of processing parameters from Controller
 ---@param deepLearningNo int Number of instance to update
@@ -216,18 +184,11 @@ local function handleOnNewImageProcessingParameter(deepLearningNo, parameter, va
     if parameter == 'registeredEvent' then
       _G.logger:fine(nameOfModule .. ": Register DNN instance " .. deepLearningInstanceNumberString .. " on event " .. value)
       if imageProcessingParams.registeredEvent ~= '' then
-        if imageProcessingParams.processWithScores then
-          Script.deregister(imageProcessingParams.registeredEvent, handleOnNewImageProcessingScores)
-        else
-          Script.deregister(imageProcessingParams.registeredEvent, handleOnNewImageProcessing)
-        end
+         Script.deregister(imageProcessingParams.registeredEvent, handleOnNewImageProcessing)
       end
       imageProcessingParams.registeredEvent = value
-      if imageProcessingParams.processWithScores then
-        Script.register(value, handleOnNewImageProcessingScores)
-      else
-        Script.register(value, handleOnNewImageProcessing)
-      end
+      Script.register(value, handleOnNewImageProcessing)
+
     elseif parameter == 'fullModelPath' then
 
       -- Setting new model for DNN

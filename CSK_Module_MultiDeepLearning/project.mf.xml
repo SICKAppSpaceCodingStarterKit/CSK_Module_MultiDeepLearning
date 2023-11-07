@@ -199,8 +199,8 @@ INFO: Other modules can check via "Script.isServedAsFunction" if function of sep
 Needs then to be called via "Script.callFunction()" (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu) +</desc>
                     <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
                     <return desc="Result score acceptable." multiplicity="?" name="validScore" type="bool"/>
-                    <return desc="Score result." multiplicity="?" name="score" type="float"/>
-                    <return desc="Result class." multiplicity="?" name="class" type="string"/>
+                    <return desc="Score result." multiplicity="[?*]" name="score" type="float"/>
+                    <return desc="Result class." multiplicity="[?*]" name="class" type="string"/>
                 </function>
                 <function name="sendParameters">
                     <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
@@ -223,17 +223,6 @@ Needs then to be called via "Script.callFunction()" (INFO: By using this, the fi
                 <function name="getInstancesAmount">
                     <desc>Get amount of created DeepLearning instances.</desc>
                     <return desc="Amount" multiplicity="1" name="amount" type="int"/>
-                </function>
-                <function name="processImageWithScoresNUM">
-                    <desc>Example of dynamically served function to process DNN on an image and return the scores for each class. +
-NUM will be replaced by the number of instance (e.g. "processImageWithScores1"). +
-INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
-Needs then to be called via "Script.callFunction()"  (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu). +</desc>
-                    <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
-                    <param desc="Sort results by descending score instead of class number." multiplicity="1" name="sorted" type="bool"/>
-                    <return desc="Result score acceptable." multiplicity="[?*]" name="validScore" type="bool"/>
-                    <return desc="Scores for each class as array (sorted by class number per default)." multiplicity="[?*]" name="score" type="float"/>
-                    <return desc="Names of each class as a table (sorted by class number per default)." multiplicity="[?*]" name="class" type="string"/>
                 </function>
                 <function name="addInstance">
                     <desc>Function to add an additional deepLearning instance.</desc>
