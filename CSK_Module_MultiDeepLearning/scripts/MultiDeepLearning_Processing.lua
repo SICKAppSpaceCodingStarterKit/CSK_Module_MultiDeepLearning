@@ -45,16 +45,20 @@ else
   deviceType = string.sub(typeName, 1, 7)
 end
 
-local function firmwareNotAllowed (firmware)
+--- Function to check if firmware supports modules feature
+---@param firmware string Firmware version
+---@return result bool Result
+local function firmwareNotAllowed(firmware)
   if firmware == "2.1.0" or firmware == "2.2.0" or firmware == "2.2.1" then
     return false
   else
     return true
   end
 end
+
 --- Function to sort results by class index instead of highest score
----@param input any Results
----@param idx any Index
+---@param input any[1+] Results
+---@param idx any[?*] Index
 ---@return output Results sorted by Index
 local function sortResultByIndex(input, idx)
   local output = { }
@@ -69,7 +73,7 @@ end
 --- Function to process incoming images with DNN
 local function handleOnNewImageProcessing(image)
 
-  _G.logger:info(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
+  _G.logger:fine(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
   if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
     viewer:addImage(image)
     viewer:present("LIVE")
@@ -127,13 +131,13 @@ Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceN
 -- Function to process incoming images with DNN (returns all scores)
 local function handleOnNewImageProcessingScores(image)
 
-  -- Return here if we are running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
+  -- Stop processing here if running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
   if deviceType == "SIM1012" and firmwareNotAllowed(firmwareVersion) then
-    _G.logger:info(nameOfModule .. ': Can not run handleOnNewImageProcessingScores() with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
+    _G.logger:warning(nameOfModule .. ': Can not run handleOnNewImageProcessingScores() with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
     return false, nil, nil
   end
 
-  _G.logger:info(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
+  _G.logger:fine(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
   if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
     viewer:addImage(image)
     viewer:present("LIVE")
@@ -207,10 +211,10 @@ Script.serveFunction("CSK_MultiDeepLearning.processImageWithScores"..deepLearnin
 local function handleOnNewImageProcessingParameter(deepLearningNo, parameter, value)
 
   if deepLearningNo == deepLearningInstanceNumber then -- set parameter only in selected script
-    _G.logger:info(nameOfModule .. ": Update parameter '" .. parameter .. "' of deepLearningNo." .. tostring(deepLearningNo) .. " to value = " .. tostring(value))
+    _G.logger:fine(nameOfModule .. ": Update parameter '" .. parameter .. "' of deepLearningNo." .. tostring(deepLearningNo) .. " to value = " .. tostring(value))
 
     if parameter == 'registeredEvent' then
-      _G.logger:info(nameOfModule .. ": Register DNN instance " .. deepLearningInstanceNumberString .. " on event " .. value)
+      _G.logger:fine(nameOfModule .. ": Register DNN instance " .. deepLearningInstanceNumberString .. " on event " .. value)
       if imageProcessingParams.registeredEvent ~= '' then
         if imageProcessingParams.processWithScores then
           Script.deregister(imageProcessingParams.registeredEvent, handleOnNewImageProcessingScores)
@@ -230,7 +234,7 @@ local function handleOnNewImageProcessingParameter(deepLearningNo, parameter, va
       imageProcessingParams.fullModelPath = value
       local model = Object.load(imageProcessingParams.fullModelPath)
       local suc = dnn:setModel(model)
-      _G.logger:info(nameOfModule .. ": Success of setting new model = " .. tostring(suc))
+      _G.logger:fine(nameOfModule .. ": Success of setting new model = " .. tostring(suc))
 
     else
       imageProcessingParams[parameter] = value

@@ -152,6 +152,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                 <event name="OnNewFullResultWithImageNUM">
                     <desc>Example of dynamically created event to notify measured result incl. class name and score of instance incl. the image. +
 NUM will be replaced by the number of instance (e.g. "OnNewResultWithImage1"). +
+Check "setProcessWithScores" regarding result configuration (single or multiple result). +
 INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
                     <param desc="Result" multiplicity="1" name="result" type="bool"/>
                     <param desc="Class" multiplicity="[1+]" name="class" type="string"/>
@@ -160,11 +161,11 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                 </event>
                 <event name="OnNewStatusProcessWithScores">
                     <trait>released</trait>
-                    <desc>Notify if the scores for all classes should be returned in the processing result</desc>
+                    <desc>Notify if the scores for all classes should be returned in the processing result.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
                 <event name="OnNewStatusSortResultByIndex">
-                    <desc>Notify if the processing result should be sorted by class index instead of highest score</desc>
+                    <desc>Notify if the processing result should be sorted by class index instead of highest score.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
                 <function name="pageCalled">
@@ -250,11 +251,11 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </function>
                 <function name="setProcessWithScores">
-                    <desc>Function to set if the scores for all classes should be returned in the processing result</desc>
+                    <desc>Function to set if the scores for all classes should be returned in the processing result.</desc>
                     <param desc="" multiplicity="1" name="status" type="bool"/>
                 </function>
                 <function name="setSortResultByIndex">
-                    <desc>Function to set if the processing result should be sorted by class index instead of highest score</desc>
+                    <desc>Function to set if the processing result should be sorted by class index instead of highest score.</desc>
                     <param desc="" multiplicity="1" name="status" type="bool"/>
                 </function>
             </serves>

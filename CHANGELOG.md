@@ -6,8 +6,9 @@ All notable changes to this project will be documented in this file.
 ### New features
 - Added event based usage of the handleOnNewImageProcessingScores function
 
-### Known issues
-- handleOnNewImageProcessingScores crashes on SIM1012 with firmware versions other than [2.1.0, 2.2.0, 2.2.1]
+### Improvements
+- Check for device and firmware to prevent incompatibilities
+- Adapted level of log messages
 
 ## Release 4.0.0
 
