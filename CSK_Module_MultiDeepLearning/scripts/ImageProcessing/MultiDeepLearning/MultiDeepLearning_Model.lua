@@ -77,17 +77,17 @@ function multiDeepLearning.create(deepLearningInstanceNo)
   if File.isdir(self.parameters.modelPath) then
     local fileList = File.list(self.parameters.modelPath)
     if fileList ~= nil and #fileList ~= 0 then
-      _G.logger:info(nameOfModule .. ': Found available models on device.')
+      _G.logger:fine(nameOfModule .. ': Found available models on device.')
       self.modelList = fileList
     else
-      _G.logger:info(nameOfModule .. ': No models available on device.')
+      _G.logger:fine(nameOfModule .. ': No models available on device.')
     end
   else
     local suc = File.mkdir(self.parameters.modelPath)
     if suc then
-      _G.logger:info(nameOfModule .. ': Created path "' .. self.parameters.modelPath .. '" on the device to store DNN models.')
+      _G.logger:fine(nameOfModule .. ': Created path "' .. self.parameters.modelPath .. '" on the device to store DNN models.')
     else
-      _G.logger:info(nameOfModule .. ': Creation of path "' .. self.parameters.modelPath .. '" on the device to store DNN models was not possible.')
+      _G.logger:fine(nameOfModule .. ': Creation of path "' .. self.parameters.modelPath .. '" on the device to store DNN models was not possible.')
     end
   end
 
