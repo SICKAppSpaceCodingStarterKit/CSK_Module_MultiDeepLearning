@@ -147,7 +147,7 @@ local function handleOnNewImageProcessing(image)
           Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, classArray, scoreArray, image)
         else
           Script.notifyEvent('MultiDeepLearning_OnNewFullResultWithImage'.. deepLearningInstanceNumberString, false, class, score, image)
-      end
+        end
       end
       if imageProcessingParams.activeInUI then
         Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', false)
@@ -170,7 +170,7 @@ local function handleOnNewImageProcessing(image)
     return false, nil, nil
   end
 end
-Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image, bool:1', 'bool:?,float:[?*],string:[?*]')
+Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image', 'bool:?,float:[?*],string:[?*]')
 
 --- Function to handle updates of processing parameters from Controller
 ---@param deepLearningNo int Number of instance to update
