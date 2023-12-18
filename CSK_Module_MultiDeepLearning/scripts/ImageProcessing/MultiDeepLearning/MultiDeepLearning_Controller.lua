@@ -312,7 +312,7 @@ Script.serveFunction('CSK_MultiDeepLearning.setForwardImage', setForwardImage)
 local function setProcessWithScores(status)
   local valid = true
   if status == true then
-    valid = helperFuncs.checkFirmware('SIM1012', 2,3,0) -- Only available on SIM1012 with firmare version >= 2.4.1
+    valid = helperFuncs.checkFirmware('SIM1012', 2,4,1) -- Only available on SIM1012 with firmare version >= 2.4.1
   end
 
   if valid then
