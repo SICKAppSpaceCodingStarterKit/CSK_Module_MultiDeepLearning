@@ -45,15 +45,37 @@ else
   deviceType = string.sub(typeName, 1, 7)
 end
 
+-- Function to split string by dot e.g. "a.bbc.d" == {"a", "bbc", "d"}
+local function splitByDot(str)
+  str = str or ""
+  local t, count = {}, 0
+  str:gsub("([^%.]+)", function(c)
+    count = count + 1
+    t[count] = c
+  end)
+  return t
+end
+
 --- Function to check if firmware supports modules feature
 ---@param firmware string Firmware version
----@return result bool Result
+---@return bool isNotAllowed
 local function firmwareNotAllowed(firmware)
-  if firmware == "2.1.0" or firmware == "2.2.0" or firmware == "2.2.1" then
-    return false
-  else
-    return true
+  local isNotAllowed = true 
+  local fwComponents = splitByDot(firmware)
+  local major = tonumber(fwComponents[1])
+  local minor = tonumber(fwComponents[2])
+  local patch = tonumber(fwComponents[3])
+
+  -- Suppor all version from 2.4.1 and newer
+  if major >= 2 then
+    if minor == 4  and patch > 0 then
+      isNotAllowed = false
+     elseif  minor > 4 then
+      isNotAllowed = false
+    end
   end
+
+  return isNotAllowed
 end
 
 --- Function to sort results by class index instead of highest score
@@ -72,7 +94,7 @@ end
 
 --- Function to process incoming images with DNN
 local function handleOnNewImageProcessing(image)
-
+  
   _G.logger:fine(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
   if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
     viewer:addImage(image)
