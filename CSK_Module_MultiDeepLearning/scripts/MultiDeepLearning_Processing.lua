@@ -34,50 +34,6 @@ imageProcessingParams.sortResultByIndex = scriptParams:get('sortResultByIndex')
 
 local viewer = View.create(viewerID)
 
--- Get SIM type
-local typeName = Engine.getTypeName() -- Full device typename of current used device
-local  firmwareVersion =  Engine.getFirmwareVersion() -- Firmware version of current used device
-local deviceType = '' -- Reduced device typename of current used device
-
-if typeName == 'AppStudioEmulator' or typeName == 'SICK AppEngine' then
-  deviceType = 'AppStudioEmulator'
-else
-  deviceType = string.sub(typeName, 1, 7)
-end
-
--- Function to split string by dot e.g. "a.bbc.d" == {"a", "bbc", "d"}
-local function splitByDot(str)
-  str = str or ""
-  local t, count = {}, 0
-  str:gsub("([^%.]+)", function(c)
-    count = count + 1
-    t[count] = c
-  end)
-  return t
-end
-
---- Function to check if firmware supports modules feature
----@param firmware string Firmware version
----@return bool isNotAllowed
-local function firmwareNotAllowed(firmware)
-  local isNotAllowed = true 
-  local fwComponents = splitByDot(firmware)
-  local major = tonumber(fwComponents[1])
-  local minor = tonumber(fwComponents[2])
-  local patch = tonumber(fwComponents[3])
-
-  -- Suppor all version from 2.4.1 and newer
-  if major >= 2 then
-    if minor == 4  and patch > 0 then
-      isNotAllowed = false
-     elseif  minor > 4 then
-      isNotAllowed = false
-    end
-  end
-
-  return isNotAllowed
-end
-
 --- Function to sort results by class index instead of highest score
 ---@param input any[1+] Results
 ---@param idx any[?*] Index
@@ -109,11 +65,6 @@ local function handleOnNewImageProcessing(image)
     local index, score, class
 
     if imageProcessingParams.processWithScores then
-      -- Stop processing here if running on SIM1012 and any firmware other than the allowed ones, otherwise the SIM will crash!
-      if deviceType == "SIM1012" and firmwareNotAllowed(firmwareVersion) then
-        _G.logger:warning(nameOfModule .. ': Can not prossess all scores with this firmware. Please change to [2.1.0, 2.2.0, 2.2.1].' )
-        return false, nil, nil
-      end
 
       local model = dnn:getModel()
       local noClasses = #model:getOutputNodeLabels()
