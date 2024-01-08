@@ -111,15 +111,6 @@ local function handleOnNewValueToForward(eventname, value)
   Script.notifyEvent(eventname, value)
 end
 
---[[
-  -- optionally
-  -- Only use if needed for extra internal objects -  see also Model
---@handleOnNewValueUpdate(instance:int,parameter:string,value:auto,selectedObject:int)
-local function handleOnNewValueUpdate(instance, parameter, value, selectedObject)
-    multiDeepLearning_Instances[instance].parameters.objects[selectedObject][parameter] = value
-end
-]]
-
 --- Function to get access to the multiDeepLearning_Model
 ---@param handle handle Handle of multiDeepLearning_Model object
 local function setMultiDeepLearning_Model_Handle(handle)
@@ -319,9 +310,23 @@ end
 Script.serveFunction('CSK_MultiDeepLearning.setForwardImage', setForwardImage)
 
 local function setProcessWithScores(status)
-  _G.logger:fine(nameOfModule .. ": Set processWithScores to = " ..  tostring(status))
-  multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = status
-  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', status)
+  local valid = true
+  if status == true then
+    valid = helperFuncs.checkFirmware('SIM1012', 2,4,1) -- Only available on SIM1012 with firmare version >= 2.4.1
+  end
+
+  if valid then
+    _G.logger:fine(nameOfModule .. ": Set processWithScores to = " ..  tostring(status))
+    multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = status
+    Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', status)
+    return true
+  else
+    _G.logger:warning(nameOfModule .. ": Firmware of SIM1012 is not compatible with this feature. Set processWithScores to false. Please change to SIM1012 firmware version 2.1.0, 2.2.0, 2.2.1 or >= 2.4.1.")
+    multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = false
+    Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', false)
+    Script.notifyEvent("MultiDeepLearning_OnNewStatusProcessWithScores", false)
+    return false
+  end
 end
 Script.serveFunction('CSK_MultiDeepLearning.setProcessWithScores', setProcessWithScores)
 
@@ -339,7 +344,7 @@ local function updateProcessingParameters()
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'fullModelPath', multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. multiDeepLearning_Instances[selectedInstance].parameters.modelName)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'registeredEvent', multiDeepLearning_Instances[selectedInstance].parameters.registeredEvent)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'forwardResultWithImage',  multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage)
-  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores',  multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
+  setProcessWithScores(multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'sortResultByIndex',  multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex)
 end
 

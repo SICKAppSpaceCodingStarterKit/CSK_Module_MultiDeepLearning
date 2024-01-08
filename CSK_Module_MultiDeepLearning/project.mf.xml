@@ -242,6 +242,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                 <function name="setProcessWithScores">
                     <desc>Function to set if the scores for all classes should be returned in the processing result.</desc>
                     <param desc="" multiplicity="1" name="status" type="bool"/>
+                    <return desc="Status if it was possible to configure." multiplicity="1" name="success" type="bool"/>
                 </function>
                 <function name="setSortResultByIndex">
                     <desc>Function to set if the processing result should be sorted by class index instead of highest score.</desc>

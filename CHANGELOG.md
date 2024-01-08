@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added event based usage of the handleOnNewImageProcessingScores function
 
 ### Improvements
+- Merged function scope of 'processImageWithScoresNUM' into 'processImageNUM' (most contend was identical), please always use 'processImageNUM'
 - Check for device and firmware to prevent incompatibilities
 - Adapted level of log messages
 
