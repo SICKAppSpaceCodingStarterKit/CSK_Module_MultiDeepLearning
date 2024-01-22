@@ -61,6 +61,8 @@ Script.serveEvent("CSK_MultiDeepLearning.OnPersistentDataModuleAvailable", "Mult
 Script.serveEvent("CSK_MultiDeepLearning.OnNewStatusLoadParameterOnReboot", "MultiDeepLearning_OnNewStatusLoadParameterOnReboot")
 Script.serveEvent("CSK_MultiDeepLearning.OnDataLoadedOnReboot", "MultiDeepLearning_OnDataLoadedOnReboot")
 Script.serveEvent("CSK_MultiDeepLearning.OnNewUploadPath", "MultiDeepLearning_OnNewUploadPath")
+Script.serveEvent('CSK_MultiDeepLearning.OnNewStatusProcessWithScores', 'MultiDeepLearning_OnNewStatusProcessWithScores')
+Script.serveEvent('CSK_MultiDeepLearning.OnNewStatusSortResultByIndex', 'MultiDeepLearning_OnNewStatusSortResultByIndex')
 
 Script.serveEvent("CSK_MultiDeepLearning.OnUserLevelOperatorActive", "MultiDeepLearning_OnUserLevelOperatorActive")
 Script.serveEvent("CSK_MultiDeepLearning.OnUserLevelMaintenanceActive", "MultiDeepLearning_OnUserLevelMaintenanceActive")
@@ -108,15 +110,6 @@ end
 local function handleOnNewValueToForward(eventname, value)
   Script.notifyEvent(eventname, value)
 end
-
---[[
-  -- optionally
-  -- Only use if needed for extra internal objects -  see also Model
---@handleOnNewValueUpdate(instance:int,parameter:string,value:auto,selectedObject:int)
-local function handleOnNewValueUpdate(instance, parameter, value, selectedObject)
-    multiDeepLearning_Instances[instance].parameters.objects[selectedObject][parameter] = value
-end
-]]
 
 --- Function to get access to the multiDeepLearning_Model
 ---@param handle handle Handle of multiDeepLearning_Model object
@@ -189,6 +182,8 @@ local function handleOnExpiredTmrMultiDeepLearning()
   Script.notifyEvent("MultiDeepLearning_OnNewStatusShowImage", multiDeepLearning_Instances[selectedInstance].parameters.showImage)
   Script.notifyEvent("MultiDeepLearning_OnNewViewerID", 'multiDeepLearningViewer' .. tostring(selectedInstance))
   Script.notifyEvent("MultiDeepLearning_OnNewStatusForwardImage", multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage)
+  Script.notifyEvent("MultiDeepLearning_OnNewStatusProcessWithScores", multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
+  Script.notifyEvent("MultiDeepLearning_OnNewStatusSortResultByIndex", multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex)
 
   Script.notifyEvent("MultiDeepLearning_OnNewValidScore", multiDeepLearning_Instances[selectedInstance].parameters.validScore)
   Script.notifyEvent("MultiDeepLearning_OnNewUploadPath", multiDeepLearning_Instances[selectedInstance].parameters.modelPath)
@@ -210,7 +205,7 @@ Script.serveFunction("CSK_MultiDeepLearning.pageCalled", pageCalled)
 
 local function setInstance(dnnInstance)
   selectedInstance = dnnInstance
-  _G.logger:info(nameOfModule .. ": New selected instance = " .. tostring(selectedInstance))
+  _G.logger:fine(nameOfModule .. ": New selected instance = " .. tostring(selectedInstance))
   multiDeepLearning_Instances[selectedInstance].activeInUI = true
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'activeInUI', true)
   pageCalled()
@@ -223,7 +218,7 @@ end
 Script.serveFunction("CSK_MultiDeepLearning.getInstancesAmount", getInstancesAmount)
 
 local function addInstance()
-  _G.logger:info(nameOfModule .. ": Add instance")
+  _G.logger:fine(nameOfModule .. ": Add instance")
   table.insert(multiDeepLearning_Instances, multiDeepLearning_Model.create(#multiDeepLearning_Instances+1))
   Script.deregister("CSK_MultiDeepLearning.OnNewValueToForward" .. tostring(#multiDeepLearning_Instances) , handleOnNewValueToForward)
   Script.register("CSK_MultiDeepLearning.OnNewValueToForward" .. tostring(#multiDeepLearning_Instances) , handleOnNewValueToForward)
@@ -232,7 +227,7 @@ end
 Script.serveFunction('CSK_MultiDeepLearning.addInstance', addInstance)
 
 local function resetInstances()
-  _G.logger:info(nameOfModule .. ": Reset instances.")
+  _G.logger:fine(nameOfModule .. ": Reset instances.")
   setInstance(1)
   local totalAmount = #multiDeepLearning_Instances
   while totalAmount > 1 do
@@ -248,26 +243,26 @@ local function setModelByName(modelName)
   local model = Object.load(multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. modelName)
 
   if model then
-    _G.logger:info(nameOfModule .. ": Set new model = " ..  modelName)
+    _G.logger:fine(nameOfModule .. ": Set new model = " ..  modelName)
     multiDeepLearning_Instances[selectedInstance].parameters.modelName = modelName
     multiDeepLearning_Instances[selectedInstance].currentModel = model
     Script.notifyEvent("MultiDeepLearning_OnNewModelFilename", multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. modelName)
     Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'fullModelPath', multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. modelName)
 
     local labels = MachineLearning.DeepNeuralNetwork.Model.getOutputNodeLabels(model)
-    _G.logger:info(nameOfModule .. ': Labels of model = ' .. table.concat(labels, ','))
+    _G.logger:fine(nameOfModule .. ': Labels of model = ' .. table.concat(labels, ','))
     Script.notifyEvent('MultiDeepLearning_OnNewModelLabels', table.concat(labels, ','))
     Script.notifyEvent("MultiDeepLearning_OnNewSelectedModel", modelName)
 
   else
-    _G.logger:info(nameOfModule .. ": Loading of model did not work")
+    _G.logger:warning(nameOfModule .. ": Loading of model did not work")
   end
 end
 Script.serveFunction("CSK_MultiDeepLearning.setModelByName", setModelByName)
 
 local function uploadFinished(status)
   if status == true then
-    _G.logger:info(nameOfModule .. ': New model was uploaded to the device.')
+    _G.logger:fine(nameOfModule .. ': New model was uploaded to the device.')
     local fileList = File.list(multiDeepLearning_Instances[selectedInstance].parameters.modelPath)
     if fileList ~= nil and #fileList ~= 0 then
       multiDeepLearning_Instances[selectedInstance].modelList = fileList
@@ -276,43 +271,71 @@ local function uploadFinished(status)
     end
     Script.notifyEvent("MultiDeepLearning_OnNewModelList", fileList)
   else
-    _G.logger:info(nameOfModule .. ': Error during upload of new model.')
+    _G.logger:warning(nameOfModule .. ': Error during upload of new model.')
   end
 end
 Script.serveFunction("CSK_MultiDeepLearning.uploadFinished", uploadFinished)
 
 local function downloadFromDevice(status)
-  _G.logger:info(nameOfModule .. ': Downloading model from device = ' .. tostring(status))
+  _G.logger:fine(nameOfModule .. ': Downloading model from device = ' .. tostring(status))
 end
 Script.serveFunction("CSK_MultiDeepLearning.downloadFromDevice", downloadFromDevice)
 
 local function setValidScore(value)
-  _G.logger:info(nameOfModule .. ": Set valid score to = " ..  tostring(value))
+  _G.logger:fine(nameOfModule .. ": Set valid score to = " ..  tostring(value))
   multiDeepLearning_Instances[selectedInstance].parameters.validScore = value
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'validScore', multiDeepLearning_Instances[selectedInstance].parameters.validScore)
 end
 Script.serveFunction("CSK_MultiDeepLearning.setValidScore", setValidScore)
 
 local function setViewerActive(status)
-  _G.logger:info(nameOfModule .. ": Set viewer active = " ..  tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set viewer active = " ..  tostring(status))
   multiDeepLearning_Instances[selectedInstance].parameters.showImage = status
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'showImage', multiDeepLearning_Instances[selectedInstance].parameters.showImage)
 end
 Script.serveFunction("CSK_MultiDeepLearning.setViewerActive", setViewerActive)
 
 local function setRegisterEvent(event)
-  _G.logger:info(nameOfModule .. ": Set registeredEvent to = " ..  event)
+  _G.logger:fine(nameOfModule .. ": Set registeredEvent to = " ..  event)
   multiDeepLearning_Instances[selectedInstance].parameters.registeredEvent = event
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'registeredEvent', event)
 end
 Script.serveFunction("CSK_MultiDeepLearning.setRegisterEvent", setRegisterEvent)
 
 local function setForwardImage(status)
-  _G.logger:info(nameOfModule .. ": Set forwardImage to = " ..  tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set forwardImage to = " ..  tostring(status))
   multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage = status
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'forwardResultWithImage', status)
 end
 Script.serveFunction('CSK_MultiDeepLearning.setForwardImage', setForwardImage)
+
+local function setProcessWithScores(status)
+  local valid = true
+  if status == true then
+    valid = helperFuncs.checkFirmware('SIM1012', 2,4,1) -- Only available on SIM1012 with firmare version >= 2.4.1
+  end
+
+  if valid then
+    _G.logger:fine(nameOfModule .. ": Set processWithScores to = " ..  tostring(status))
+    multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = status
+    Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', status)
+    return true
+  else
+    _G.logger:warning(nameOfModule .. ": Firmware of SIM1012 is not compatible with this feature. Set processWithScores to false. Please change to SIM1012 firmware version 2.1.0, 2.2.0, 2.2.1 or >= 2.4.1.")
+    multiDeepLearning_Instances[selectedInstance].parameters.processWithScores = false
+    Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'processWithScores', false)
+    Script.notifyEvent("MultiDeepLearning_OnNewStatusProcessWithScores", false)
+    return false
+  end
+end
+Script.serveFunction('CSK_MultiDeepLearning.setProcessWithScores', setProcessWithScores)
+
+local function setSortResultByIndex(status)
+  _G.logger:fine(nameOfModule .. ": Set sortResultByIndex to = " ..  tostring(status))
+  multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex = status
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'sortResultByIndex', status)
+end
+Script.serveFunction('CSK_MultiDeepLearning.setSortResultByIndex', setSortResultByIndex)
 
 --- Function to update processing parameters within the processing threads
 local function updateProcessingParameters()
@@ -320,6 +343,9 @@ local function updateProcessingParameters()
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'validScore', multiDeepLearning_Instances[selectedInstance].parameters.validScore)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'fullModelPath', multiDeepLearning_Instances[selectedInstance].parameters.modelPath .. multiDeepLearning_Instances[selectedInstance].parameters.modelName)
   Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'registeredEvent', multiDeepLearning_Instances[selectedInstance].parameters.registeredEvent)
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'forwardResultWithImage',  multiDeepLearning_Instances[selectedInstance].parameters.forwardResultWithImage)
+  setProcessWithScores(multiDeepLearning_Instances[selectedInstance].parameters.processWithScores)
+  Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', selectedInstance, 'sortResultByIndex',  multiDeepLearning_Instances[selectedInstance].parameters.sortResultByIndex)
 end
 
 -- *****************************************************************

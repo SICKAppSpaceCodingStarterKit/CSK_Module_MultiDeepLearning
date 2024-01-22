@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 4.1.0
+
+### New features
+- Added event based usage of the handleOnNewImageProcessingScores function
+
+### Improvements
+- Merged function scope of 'processImageWithScoresNUM' into 'processImageNUM' (most contend was identical), please always use 'processImageNUM'
+- Check for device and firmware to prevent incompatibilities
+- Adapted level of log messages
+
 ## Release 4.0.0
 
 ### Improvements

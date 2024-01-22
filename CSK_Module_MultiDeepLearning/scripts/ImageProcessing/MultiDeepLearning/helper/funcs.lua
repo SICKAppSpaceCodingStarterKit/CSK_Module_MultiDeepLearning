@@ -9,6 +9,17 @@
 
 local funcs = {}
 
+-- Get SIM type / firmware to adapt device specific parameters
+local typeName = Engine.getTypeName()
+local firmware = Engine.getFirmwareVersion()
+local deviceType
+
+if typeName == 'AppStudioEmulator' or typeName == 'SICK AppEngine' then
+  deviceType = 'AppStudioEmulator'
+else
+  deviceType = string.sub(typeName, 1, 7)
+end
+
 --**************************************************************************
 --********************** End Global Scope **********************************
 --**************************************************************************
@@ -142,6 +153,56 @@ local function createStringListBySimpleTable(content)
   return list
 end
 funcs.createStringListBySimpleTable = createStringListBySimpleTable
+
+-- Function to split string by dot e.g. "a.bbc.d" == {"a", "bbc", "d"}
+---@param str string String to separate
+---@return splitString string[1+] Splitted version parts
+local function splitByDot(str)
+  str = str or ""
+  local splitString, count = {}, 0
+  str:gsub("([^%.]+)", function(c)
+    count = count + 1
+    splitString[count] = c
+  end)
+  return splitString
+end
+funcs.splitByDot = splitByDot
+
+--- Function to check if firmware supports modules feature
+---@param checkMajor string Major version
+---@param checkMinor string Minor version
+---@param checkPatch string Patch version
+---@return firmwareOK bool Status if firmware matches
+local function checkFirmware(checkDevice, checkMajor, checkMinor, checkPatch)
+
+  local firmwareOK = false
+  if checkDevice == deviceType then
+    local fwComponents = splitByDot(firmware)
+
+    if #fwComponents == 3 then
+
+      local major = tonumber(fwComponents[1])
+      local minor = tonumber(fwComponents[2])
+      local patch = tonumber(fwComponents[3])
+
+      -- Check if version is valid
+      if major > checkMajor then
+        firmwareOK = true
+      elseif major == checkMajor then
+        if minor > checkMinor then
+          firmwareOK = true
+        elseif minor == checkMinor and patch >= checkPatch then
+            firmwareOK = true
+        end
+      end
+    end
+  else
+    firmwareOK = true
+  end
+
+  return firmwareOK
+end
+funcs.checkFirmware = checkFirmware
 
 return funcs
 
