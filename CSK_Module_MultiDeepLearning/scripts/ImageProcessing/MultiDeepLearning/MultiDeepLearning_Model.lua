@@ -13,11 +13,21 @@ local nameOfModule = 'CSK_MultiDeepLearning'
 local multiDeepLearning = {}
 multiDeepLearning.__index = multiDeepLearning
 
+multiDeepLearning.styleForUI = 'None' -- Optional parameter to set UI style
+multiDeepLearning.version = Engine.getCurrentAppVersion() -- Version of module
+
 --**************************************************************************
 --********************** End Global Scope **********************************
 --**************************************************************************
 --**********************Start Function Scope *******************************
 --**************************************************************************
+
+--- Function to react on UI style change
+local function handleOnStyleChanged(theme)
+  multiDeepLearning.styleForUI = theme
+  Script.notifyEvent("MultiDeepLearning_OnNewStatusCSKStyle", multiDeepLearning.styleForUI)
+end
+Script.register('CSK_PersistentData.OnNewStatusCSKStyle', handleOnStyleChanged)
 
 -- Function to create new instance
 ---@param deepLearningInstanceNo int Number of instance
@@ -50,8 +60,8 @@ function multiDeepLearning.create(deepLearningInstanceNo)
 
   -- Parameters to be saved permanently
   self.parameters = {}
-  --self.parameters.eventName = '-' -- Event to register to get images to process
-  self.parameters.modelPath = '/public/models/' -- Path to search for DNN models
+  self.parameters.flowConfigPriority = CSK_FlowConfig ~= nil or false -- Status if FlowConfig should have priority for FlowConfig relevant configurations
+  self.parameters.modelPath = '/public/CSK_DeepLearning_Models/' -- Path to search for DNN models
   self.parameters.modelName = '-' -- Name of selected model
   self.parameters.validScore = 80 -- Score to decide if image is from a class
   self.parameters.showImage = false -- Show image on UI
@@ -80,14 +90,20 @@ function multiDeepLearning.create(deepLearningInstanceNo)
       _G.logger:fine(nameOfModule .. ': Found available models on device.')
       self.modelList = fileList
     else
-      _G.logger:fine(nameOfModule .. ': No models available on device.')
+      _G.logger:fine(nameOfModule .. ': Add Cornflakes sample to folder.')
+      File.copy('/resources/CSK_Module_MultiDeepLearningSampleData/Cornflakes.json', self.parameters.modelPath .. '/Cornflakes.json')
+      fileList = File.list(self.parameters.modelPath)
+      self.modelList = fileList
     end
   else
     local suc = File.mkdir(self.parameters.modelPath)
     if suc then
-      _G.logger:fine(nameOfModule .. ': Created path "' .. self.parameters.modelPath .. '" on the device to store DNN models.')
+      File.copy('/resources/CSK_Module_MultiDeepLearningSampleData/Cornflakes.json', self.parameters.modelPath .. '/Cornflakes.json')
+      _G.logger:fine(nameOfModule .. ': Created path "' .. self.parameters.modelPath .. '" on the device to store DNN models and added Cornflakes sample.')
+      fileList = File.list(self.parameters.modelPath)
+      self.modelList = fileList
     else
-      _G.logger:fine(nameOfModule .. ': Creation of path "' .. self.parameters.modelPath .. '" on the device to store DNN models was not possible.')
+      _G.logger:info(nameOfModule .. ': Creation of path "' .. self.parameters.modelPath .. '" on the device to store DNN models was not possible.')
     end
   end
 

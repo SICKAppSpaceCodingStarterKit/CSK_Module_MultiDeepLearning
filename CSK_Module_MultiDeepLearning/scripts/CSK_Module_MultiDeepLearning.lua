@@ -51,12 +51,13 @@ local multiDeepLearning_Instances = {} -- Handle all instances
 -- Check / edit this script to see/edit functions which communicate with the UI
 local multiDeepLearningController = require('ImageProcessing/MultiDeepLearning/MultiDeepLearning_Controller')
 
-if availableAPIs.specific then
-  _G.logger:info("MachineLearning API Support = true")
+if _G.availableAPIs.default and _G.availableAPIs.specific then
+  local setInstanceHandle = require('ImageProcessing/MultiDeepLearning/FlowConfig/MultiDeepLearning_FlowConfig')
   table.insert(multiDeepLearning_Instances, multiDeepLearning_Model.create(1)) -- create(deepLearningInstanceNo:int)
   multiDeepLearningController.setMultiDeepLearning_Instances_Handle(multiDeepLearning_Instances) -- share handle of instances
+  setInstanceHandle(multiDeepLearning_Instances)
 else
-  _G.logger:warning("CSK_MultiDeepLearning: Features of this module are not supported on this device. Missing APIs.")
+  _G.logger:warning("CSK_MultiDeepLearning: Relevant CROWN(s) not available on device. Module is not supported...")
 end
 
 --**************************************************************************
@@ -120,7 +121,9 @@ local function main()
   ----------------------------------------------------------------------------------------
 
   --startProcessing() --> see above
-  CSK_MultiDeepLearning.setInstance(1)
+  if _G.availableAPIs.default and _G.availableAPIs.specific then
+    CSK_MultiDeepLearning.setInstance(1)
+  end
   CSK_MultiDeepLearning.pageCalled() -- Update UI
 end
 Script.register("Engine.OnStarted", main)

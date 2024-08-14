@@ -45,7 +45,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                     <param desc="Score" multiplicity="1" name="score" type="string"/>
                 </event>
                 <event name="OnNewResultNUM">
-                    <desc>Example of dynamically created event to notify measured result of instance. +
+                    <desc>Example of dynamically created event to notify result if the class for this instance was determined with the necessary score. +
 NUM will be replaced by the number of instance (e.g. "OnNewResult1"). +
 INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific instance exists.</desc>
                     <param desc="Result" multiplicity="1" name="result" type="bool"/>
@@ -168,6 +168,22 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                     <desc>Notify if the processing result should be sorted by class index instead of highest score.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
+                <event name="OnNewStatusFlowConfigPriority">
+                    <desc>Notify if FlowConfig should have priority for FlowConfig relevant configurations.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusCSKStyle">
+                    <desc>Notify UI style to use for CSK modules.</desc>
+                    <param desc="UI style" multiplicity="1" name="theme" type="string"/>
+                </event>
+                <event name="OnNewStatusModuleVersion">
+                    <desc>Notify version of module.</desc>
+                    <param desc="Version" multiplicity="1" name="version" type="string"/>
+                </event>
+                <event name="OnNewStatusModuleIsActive">
+                    <desc>Notify if module can be used on device.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
                 <function name="pageCalled">
                     <desc>Function to register "OnResume" of the module UI (only as helper function).</desc>
                     <return desc="Empty string (only needed to simplify binding)." multiplicity="1" name="empty" type="string"/>
@@ -204,13 +220,11 @@ Needs then to be called via "Script.callFunction()" (INFO: By using this, the fi
                 </function>
                 <function name="sendParameters">
                     <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
+                    <param desc="[Optional] Set to TRUE if the data should NOT be saved immediately after sending." multiplicity="?" name="noDataSave" type="bool"/>
                 </function>
                 <function name="setParameterName">
                     <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
                     <param desc="Name of the parameter." multiplicity="1" name="name" type="string"/>
-                </function>
-                <function name="loadParameters">
-                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
                 </function>
                 <function name="setRegisterEvent">
                     <desc>Set event to listen for incoming images to process. Will be set for currently selected instance (see "setInstance").</desc>
@@ -223,6 +237,17 @@ Needs then to be called via "Script.callFunction()" (INFO: By using this, the fi
                 <function name="getInstancesAmount">
                     <desc>Get amount of created DeepLearning instances.</desc>
                     <return desc="Amount" multiplicity="1" name="amount" type="int"/>
+                </function>
+                <function name="processImageWithScoresNUM">
+                    <desc>Example of dynamically served function to process DNN on an image and return the scores for each class. +
+NUM will be replaced by the number of instance (e.g. "processImageWithScores1"). +
+INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
+Needs then to be called via "Script.callFunction()"  (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu). +</desc>
+                    <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
+                    <param desc="Sort results by descending score instead of class number." multiplicity="1" name="sorted" type="bool"/>
+                    <return desc="Result score acceptable." multiplicity="[?*]" name="validScore" type="bool"/>
+                    <return desc="Scores for each class as array (sorted by class number per default)." multiplicity="[?*]" name="score" type="float"/>
+                    <return desc="Names of each class as a table (sorted by class number per default)." multiplicity="[?*]" name="class" type="string"/>
                 </function>
                 <function name="addInstance">
                     <desc>Function to add an additional deepLearning instance.</desc>
@@ -248,10 +273,107 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                     <desc>Function to set if the processing result should be sorted by class index instead of highest score.</desc>
                     <param desc="" multiplicity="1" name="status" type="bool"/>
                 </function>
+                <function name="setFlowConfigPriority">
+                    <desc>Function to configure if FlowConfig should have priority for FlowConfig relevant configuration.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="clearFlowConfigRelevantConfiguration">
+                    <desc>Function to clear FlowConfig relevant configurations.</desc>
+                </function>
+                <function name="getStatusModuleActive">
+                    <desc>Function to get status if module is active.</desc>
+                    <return desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="loadParameters">
+                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
+                    <return desc="Success to load parameters." multiplicity="1" name="success" type="bool"/>
+                </function>
+                <function name="getParameters">
+                    <trait>released</trait>
+                    <desc>Function to get all parameters of the client in JSON format.</desc>
+                    <param desc="Number of instance to get parameters from." multiplicity="1" name="instanceNo" type="int"/>
+                    <return desc="JSON string with all parameters." multiplicity="1" name="jsonParameters" type="string"/>
+                </function>
+                <function name="resetModule">
+                    <desc>Function to reset main configuration of module.</desc>
+                </function>
             </serves>
         </crown>
+        <crown name="MultiDeepLearning_FC">
+            <trait>released</trait>
+            <desc>Crown to provide CSK_FlowConfig relevant features.</desc>
+            <enum name="ResultType" trait="released" type="string">
+                <desc>Types of results to provide.</desc>
+                <item desc="Name of the measured class (see 'CSK_MultiDeepLearning.OnNewMeasuredClass[InstanceNUM]')." name="CLASS">CLASS</item>
+                <item desc="Boolean if class was measured with necessary score (see 'CSK_MultiDeepLearning.OnNewResult[InstanceNUM]')." name="CLASS_VALID">CLASS_VALID</item>
+            </enum>
+            <serves/>
+            <crown name="ImageSource">
+                <desc>Set source of images to process.</desc>
+                <serves>
+                    <function name="create">
+                        <desc>Internally used CSK_FlowConfig create function.</desc>
+                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                    </function>
+                    <function name="imageSource">
+                        <include>data-flow</include>
+                        <desc>Set source of images to process.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="Set source of images to process.&#10;&#10;Parameter:&#10;1: image (IMAGE)" multiplicity="1" name="imageSource" type="string"/>
+                    </function>
+                </serves>
+            </crown>
+            <crown name="OnNewResult">
+                <trait>released</trait>
+                <desc>Provide result of classification.</desc>
+                <serves>
+                    <event name="OnNewResult">
+                        <include>data-flow</include>
+                        <desc>Provide result of classification.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="'CSK_MultiDeepLearning.OnNewResult[InstanceNUM]' or 'CSK_MultiDeepLearning.OnNewMeasuredClass[InstanceNUM]'&#10;&#10;Parameter:&#10;1: Result if class was determined with necessary score (BOOL) if MODE = 'CLASS_VALID' or measured class (STRING) if MODE = 'CLASS'" multiplicity="1" name="OnNewResult" type="string"/>
+                    </event>
+                    <function name="create">
+                        <trait>released</trait>
+                        <desc>Internally used CSK_FlowConfig create function.</desc>
+                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <param desc="Mode of result to provide.&#10;&#10;'CLASS' = Measured class&#10;&#10;'CLASS_VALID' = Class was measured with necessary score" multiplicity="1" name="Mode" ref="MultiDeepLearning_FC.ResultType" type="enum"/>
+                        <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                    </function>
+                    <function name="register">
+                        <trait>released</trait>
+                        <desc>Internally used CSK_FlowConfig register function.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="Internal parameter (not used)." multiplicity="1" name="eventname" type="string"/>
+                        <param desc="Internally used callback function." multiplicity="1" name="callback" type="string"/>
+                        <return desc="Success of register process." multiplicity="1" name="success" type="bool"/>
+                    </function>
+                </serves>
+            </crown>
+            <crown name="Process">
+                <trait>released</trait>
+                <desc>Set source of images to process and provide classification result.</desc>
+                <serves>
+                    <function name="create">
+                        <trait>released</trait>
+                        <desc>Internally used CSK_FlowConfig create function.</desc>
+                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <param desc="Mode of result to provide.&#10;&#10;'CLASS' = Measured class&#10;&#10;'CLASS_VALID' = Class was measured with necessary score" multiplicity="1" name="Mode" ref="MultiDeepLearning_FC.ResultType" type="enum"/>
+                        <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                    </function>
+                    <function name="process">
+                        <include>data-flow</include>
+                        <desc>Set source of images to process and provide classification result.</desc>
+                        <param desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
+                        <param desc="Set source of images to process.&#10;&#10;Parameter:&#10;1: image (IMAGE)" multiplicity="1" name="imageSource" type="string"/>
+                        <return desc="'CSK_MultiDeepLearning.OnNewResult[InstanceNUM]' or 'CSK_MultiDeepLearning.OnNewMeasuredClass[InstanceNUM]'&#10;&#10;Parameter:&#10;1: Result if class was determined with necessary score (BOOL) if MODE = 'CLASS_VALID' or measured class (STRING) if MODE = 'CLASS'" multiplicity="1" name="OnNewResult" type="string"/>
+                    </function>
+                </serves>
+            </crown>
+        </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">4.1.0</meta>
+        <meta key="version">5.0.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>

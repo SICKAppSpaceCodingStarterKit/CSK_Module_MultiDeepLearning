@@ -15,12 +15,14 @@ For further information check out the [documentation](https://raw.githack.com/SI
 
 ## Information
 
-Tested on
+Tested on  
 
 |Device|Firmware|Module version
 |--|--|--|
+|SICK AppEngine|V1.7.0|V5.0.0|
 |SICK AppEngine|V1.5.0|V4.1.0|
-|SIM 1012|V2.2.0|V4.1.0|
+|SIM1012|V2.4.2|V5.0.0|
+|SIM1012|V2.2.0|V4.1.0|
 
 This module is part of the SICK AppSpace Coding Starter Kit developing approach.
 It is programmed in an object oriented way. Some of these modules use kind of "classes" in Lua to make it possible to reuse code / classes in other projects.

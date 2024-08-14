@@ -5,6 +5,7 @@
 
 local availableAPIs = {}
 
+-- Function to load all default APIs
 local function loadAPIs()
 
   CSK_MultiDeepLearning = require 'API.CSK_MultiDeepLearning'
@@ -17,7 +18,6 @@ local function loadAPIs()
   Log.SharedLogger = require 'API.Log.SharedLogger'
   Object = require 'API.Object'
   Timer = require 'API.Timer'
-  View = require 'API.View'
 
   -- Check if related CSK modules are available to be used
   local appList = Engine.listApps()
@@ -26,12 +26,16 @@ local function loadAPIs()
       CSK_PersistentData = require 'API.CSK_PersistentData'
     elseif appList[i] == 'CSK_Module_UserManagement' then
       CSK_UserManagement = require 'API.CSK_UserManagement'
+    elseif appList[i] == 'CSK_Module_FlowConfig' then
+      CSK_FlowConfig = require 'API.CSK_FlowConfig'
     end
   end
 end
 
+-- Function to load specific APIs
 local function loadSpecificAPIs()
   -- If you want to check for specific APIs/functions supported on the device the module is running, place relevant APIs here
+  View = require 'API.View'
   MachineLearning = {}
   MachineLearning.DeepNeuralNetwork = require 'API.MachineLearning.DeepNeuralNetwork'
   MachineLearning.DeepNeuralNetwork.Model = require 'API.MachineLearning.DeepNeuralNetwork.Model'
