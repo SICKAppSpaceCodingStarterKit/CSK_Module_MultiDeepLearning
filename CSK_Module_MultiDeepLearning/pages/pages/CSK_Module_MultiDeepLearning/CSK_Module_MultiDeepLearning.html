@@ -394,22 +394,23 @@
                                                             </layout-column>
                                                             <layout-column id="ColumnLayout13"
                                                                 style="align-items: stretch">
-                                                                <davinci-text-field id="TF_RegisteredEvent" type="text"
-                                                                    title="Process images receiving from this event."
-                                                                    style="flex-grow: 1">
-                                                                    <crown-binding event="change"
-                                                                        name="CSK_MultiDeepLearning/setRegisterEvent"
-                                                                        path="param/args/event" auto-commit>
-                                                                    </crown-binding>
-                                                                    <crown-edpws-binding property="value"
-                                                                        name="CSK_MultiDeepLearning/OnNewStatusRegisteredEvent"
-                                                                        update-on-resume>
-                                                                    </crown-edpws-binding>
-                                                                    <crown-edpws-binding property="disabled"
-                                                                        name="CSK_MultiDeepLearning/OnNewStatusFlowConfigPriority"
-                                                                        update-on-resume>
-                                                                    </crown-edpws-binding>
-                                                                </davinci-text-field>
+												<davinci-text-field id="TF_RegisteredEvent" type="text"
+													title="Process images receiving from this event, like 'CSK_ImagePlayer.OnNewImage'"
+													placeholder="e.g. CSK_ImagePlayer.OnNewImage"
+													style="flex-grow: 1">
+												<crown-binding event="change"
+													name="CSK_MultiDeepLearning/setRegisterEvent"
+													path="param/args/event" auto-commit>
+												</crown-binding>
+												<crown-edpws-binding property="value"
+													name="CSK_MultiDeepLearning/OnNewStatusRegisteredEvent"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MultiDeepLearning/OnNewStatusFlowConfigPriority"
+													update-on-resume>
+												</crown-edpws-binding>
+												</davinci-text-field>
                                                             </layout-column>
                                                         </layout-row>
                                                         <layout-row id="Placeholder1"

@@ -619,7 +619,7 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <div class="details">
 <span id="author" class="author">SICK AG</span><br>
 <span id="revnumber">version 5.0.0,</span>
-<span id="revdate">2024-08-14</span>
+<span id="revdate">2024-10-11</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -647,7 +647,6 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <li><a href="#API:Function:CSK_MultiDeepLearning.loadParameters"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">loadParameters()</span></a></li>
 <li><a href="#API:Function:CSK_MultiDeepLearning.pageCalled"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">pageCalled()</span></a></li>
 <li><a href="#API:Function:CSK_MultiDeepLearning.processImageNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">processImageNUM()</span></a></li>
-<li><a href="#API:Function:CSK_MultiDeepLearning.processImageWithScoresNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">processImageWithScoresNUM()</span></a></li>
 <li><a href="#API:Function:CSK_MultiDeepLearning.resetInstances"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">resetInstances()</span></a></li>
 <li><a href="#API:Function:CSK_MultiDeepLearning.resetModule"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">resetModule()</span></a></li>
 <li><a href="#API:Function:CSK_MultiDeepLearning.sendParameters"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">sendParameters()</span></a></li>
@@ -710,13 +709,13 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </li>
 <li><a href="#API:Crown:MultiDeepLearning_FC"><span class="api-crown">MultiDeepLearning_FC</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_65">Short description</a></li>
+<li><a href="#_short_description_64">Short description</a></li>
 <li><a href="#_overview_2">Overview</a></li>
 </ul>
 </li>
 <li><a href="#API:Crown:MultiDeepLearning_FC.ImageSource"><span class="api-crown">MultiDeepLearning_FC.ImageSource</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_66">Short description</a></li>
+<li><a href="#_short_description_65">Short description</a></li>
 <li><a href="#_overview_3">Overview</a></li>
 <li><a href="#_functions_2">Functions</a>
 <ul class="sectlevel4">
@@ -728,7 +727,7 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </li>
 <li><a href="#API:Crown:MultiDeepLearning_FC.OnNewResult"><span class="api-crown">MultiDeepLearning_FC.OnNewResult</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_69">Short description</a></li>
+<li><a href="#_short_description_68">Short description</a></li>
 <li><a href="#_overview_4">Overview</a></li>
 <li><a href="#_functions_3">Functions</a>
 <ul class="sectlevel4">
@@ -745,7 +744,7 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </li>
 <li><a href="#API:Crown:MultiDeepLearning_FC.Process"><span class="api-crown">MultiDeepLearning_FC.Process</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_73">Short description</a></li>
+<li><a href="#_short_description_72">Short description</a></li>
 <li><a href="#_overview_5">Overview</a></li>
 <li><a href="#_functions_4">Functions</a>
 <ul class="sectlevel4">
@@ -785,7 +784,7 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Date</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2024-08-14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2024-10-11</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Author</p></th>
@@ -889,9 +888,6 @@ Typically to configure this module to work with other modules you should do this
 </li>
 <li>
 <p><a href="#API:Function:CSK_MultiDeepLearning.processImageNUM">processImageNUM()</a></p>
-</li>
-<li>
-<p><a href="#API:Function:CSK_MultiDeepLearning.processImageWithScoresNUM">processImageWithScoresNUM()</a></p>
 </li>
 <li>
 <p><a href="#API:Function:CSK_MultiDeepLearning.resetInstances">resetInstances()</a></p>
@@ -1384,7 +1380,7 @@ Typically to configure this module to work with other modules you should do this
 <div class="sect5">
 <h6 id="_short_description_11">Short description</h6>
 <div class="paragraph">
-<p>Example of dynamically served function to process DNN on an image.<br>
+<p>Example of dynamically served function to execute Deep Neural Network (DNN) on an image.<br>
 NUM will be replaced by the number of instance (e.g. "processImage1").<br>
 INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists.<br>
 Needs then to be called via "Script.callFunction()" (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu)<br></p>
@@ -1467,109 +1463,16 @@ Needs then to be called via "Script.callFunction()" (INFO: By using this, the fi
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MultiDeepLearning.processImageWithScoresNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">processImageWithScoresNUM()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_12">Short description</h6>
-<div class="paragraph">
-<p>Example of dynamically served function to process DNN on an image and return the scores for each class.<br>
-NUM will be replaced by the number of instance (e.g. "processImageWithScores1").<br>
-INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists.<br>
-Needs then to be called via "Script.callFunction()"  (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu).<br></p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_4">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">image</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OBJECT<br>
-<a href="#API:Crown:Image">Image</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Image to process.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sorted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort results by descending score instead of class number.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_return_values_7">Return values</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">validScore</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[?*]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Result score acceptable.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">score</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FLOAT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[?*]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Scores for each class as array (sorted by class number per default).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[?*]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Names of each class as a table (sorted by class number per default).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_10">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">validScore, score, class = CSK_MultiDeepLearning.processImageWithScoresNUM(image, sorted)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.resetInstances"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">resetInstances()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_13">Short description</h6>
+<h6 id="_short_description_12">Short description</h6>
 <div class="paragraph">
 <p>Function to reset instances to one single instance.<br>
 IMPORTANT: As instances start their own threads, the module needs to be restarted if new instances are needed&#8230;&#8203; (see AppEngine docu for "Script.startScript").</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_11">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_10">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.resetInstances()</code></pre>
@@ -1580,13 +1483,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.resetModule"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">resetModule()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_14">Short description</h6>
+<h6 id="_short_description_13">Short description</h6>
 <div class="paragraph">
 <p>Function to reset main configuration of module.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_12">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_11">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.resetModule()</code></pre>
@@ -1597,13 +1500,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.sendParameters"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">sendParameters()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_15">Short description</h6>
+<h6 id="_short_description_14">Short description</h6>
 <div class="paragraph">
 <p>Send parameters to CSK_PersistentData module if possible to save them.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_5">Parameters</h6>
+<h6 id="_parameters_4">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1630,7 +1533,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_13">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_12">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.sendParameters(noDataSave)</code></pre>
@@ -1641,9 +1544,53 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setFlowConfigPriority"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setFlowConfigPriority()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_16">Short description</h6>
+<h6 id="_short_description_15">Short description</h6>
 <div class="paragraph">
 <p>Function to configure if FlowConfig should have priority for FlowConfig relevant configuration.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_5">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_13">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setFlowConfigPriority(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MultiDeepLearning.setForwardImage"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setForwardImage()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_16">Short description</h6>
+<div class="paragraph">
+<p>Functin to set if the image incl. result should be forwarded after processing.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1677,50 +1624,6 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <h6 id="_sample_auto_generated_14">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setFlowConfigPriority(status)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MultiDeepLearning.setForwardImage"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setForwardImage()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_17">Short description</h6>
-<div class="paragraph">
-<p>Functin to set if the image incl. result should be forwarded after processing.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_7">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_15">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setForwardImage(status)</code></pre>
 </div>
 </div>
@@ -1729,13 +1632,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setInstance"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setInstance()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_18">Short description</h6>
+<h6 id="_short_description_17">Short description</h6>
 <div class="paragraph">
 <p>Set instance to select.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_8">Parameters</h6>
+<h6 id="_parameters_7">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1762,7 +1665,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_16">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_15">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setInstance(dnnInstance)</code></pre>
@@ -1773,13 +1676,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setLoadOnReboot"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setLoadOnReboot()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_19">Short description</h6>
+<h6 id="_short_description_18">Short description</h6>
 <div class="paragraph">
 <p>Configure if this module should load its saved parameters at app/device boot up.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_9">Parameters</h6>
+<h6 id="_parameters_8">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1806,7 +1709,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_17">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_16">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setLoadOnReboot(status)</code></pre>
@@ -1817,13 +1720,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setModelByName"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setModelByName()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_20">Short description</h6>
+<h6 id="_short_description_19">Short description</h6>
 <div class="paragraph">
-<p>Set DNN model to use.</p>
+<p>Set Deep Neural Network (DNN) model to use.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_10">Parameters</h6>
+<h6 id="_parameters_9">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1850,7 +1753,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_18">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_17">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setModelByName(modelName)</code></pre>
@@ -1861,13 +1764,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setParameterName"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setParameterName()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_21">Short description</h6>
+<h6 id="_short_description_20">Short description</h6>
 <div class="paragraph">
 <p>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_11">Parameters</h6>
+<h6 id="_parameters_10">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1894,7 +1797,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_19">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_18">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setParameterName(name)</code></pre>
@@ -1905,13 +1808,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setProcessWithScores"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setProcessWithScores()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_22">Short description</h6>
+<h6 id="_short_description_21">Short description</h6>
 <div class="paragraph">
 <p>Function to set if the scores for all classes should be returned in the processing result.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_12">Parameters</h6>
+<h6 id="_parameters_11">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1938,7 +1841,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_8">Return values</h6>
+<h6 id="_return_values_7">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1965,7 +1868,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_20">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_19">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">success = CSK_MultiDeepLearning.setProcessWithScores(status)</code></pre>
@@ -1976,13 +1879,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setRegisterEvent"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setRegisterEvent()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_23">Short description</h6>
+<h6 id="_short_description_22">Short description</h6>
 <div class="paragraph">
 <p>Set event to listen for incoming images to process. Will be set for currently selected instance (see "setInstance").</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_13">Parameters</h6>
+<h6 id="_parameters_12">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2009,7 +1912,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_21">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_20">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setRegisterEvent(event)</code></pre>
@@ -2020,13 +1923,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setSortResultByIndex"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setSortResultByIndex()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_24">Short description</h6>
+<h6 id="_short_description_23">Short description</h6>
 <div class="paragraph">
 <p>Function to set if the processing result should be sorted by class index instead of highest score.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_14">Parameters</h6>
+<h6 id="_parameters_13">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2053,7 +1956,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_22">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_21">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setSortResultByIndex(status)</code></pre>
@@ -2064,13 +1967,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setValidScore"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setValidScore()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_25">Short description</h6>
+<h6 id="_short_description_24">Short description</h6>
 <div class="paragraph">
 <p>Set the value of a score to be a valid result.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_15">Parameters</h6>
+<h6 id="_parameters_14">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2097,7 +2000,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_23">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_22">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setValidScore(value)</code></pre>
@@ -2108,13 +2011,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.setViewerActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">setViewerActive()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_26">Short description</h6>
+<h6 id="_short_description_25">Short description</h6>
 <div class="paragraph">
 <p>Set if viewer on UI should display the image.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_16">Parameters</h6>
+<h6 id="_parameters_15">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2141,7 +2044,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_24">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_23">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.setViewerActive(status)</code></pre>
@@ -2152,13 +2055,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Function:CSK_MultiDeepLearning.uploadFinished"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-function">uploadFinished()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_27">Short description</h6>
+<h6 id="_short_description_26">Short description</h6>
 <div class="paragraph">
 <p>Upload of models to device finished.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_17">Parameters</h6>
+<h6 id="_parameters_16">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2185,7 +2088,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_25">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_24">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MultiDeepLearning.uploadFinished(status)</code></pre>
@@ -2199,13 +2102,13 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnDataLoadedOnReboot"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnDataLoadedOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_28">Short description</h6>
+<h6 id="_short_description_27">Short description</h6>
 <div class="paragraph">
 <p>Event to call if module tried to load parameters and should be ready.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_26">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_25">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnDataLoadedOnReboot</span>()
@@ -2220,7 +2123,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewFullResultWithImageNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewFullResultWithImageNUM</span></h5>
 <div class="sect5">
-<h6 id="_short_description_29">Short description</h6>
+<h6 id="_short_description_28">Short description</h6>
 <div class="paragraph">
 <p>Example of dynamically created event to notify measured result incl. class name and score of instance incl. the image.<br>
 NUM will be replaced by the number of instance (e.g. "OnNewResultWithImage1").<br>
@@ -2275,7 +2178,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_26">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewFullResultWithImageNUM</span>(result, class, score, img)
@@ -2290,7 +2193,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewImageProcessingParameter"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewImageProcessingParameter</span></h5>
 <div class="sect5">
-<h6 id="_short_description_30">Short description</h6>
+<h6 id="_short_description_29">Short description</h6>
 <div class="paragraph">
 <p>Event to share processing parameters to the instances.</p>
 </div>
@@ -2335,7 +2238,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewImageProcessingParameter</span>(instanceNo, parameter, value)
@@ -2350,7 +2253,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewInstanceList"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewInstanceList</span></h5>
 <div class="sect5">
-<h6 id="_short_description_31">Short description</h6>
+<h6 id="_short_description_30">Short description</h6>
 <div class="paragraph">
 <p>Notify list of created instances.</p>
 </div>
@@ -2383,7 +2286,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewInstanceList</span>(list)
@@ -2398,7 +2301,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewMeasuredClass"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewMeasuredClass</span></h5>
 <div class="sect5">
-<h6 id="_short_description_32">Short description</h6>
+<h6 id="_short_description_31">Short description</h6>
 <div class="paragraph">
 <p>Notify measured class of currently selected instance.</p>
 </div>
@@ -2431,7 +2334,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMeasuredClass</span>(class)
@@ -2446,7 +2349,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewMeasuredClassNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewMeasuredClassNUM</span></h5>
 <div class="sect5">
-<h6 id="_short_description_33">Short description</h6>
+<h6 id="_short_description_32">Short description</h6>
 <div class="paragraph">
 <p>Example of dynamically created event to notify measured class of instance.<br>
 NUM will be replaced by the number of instance (e.g. "OnNewMeasuredClass1").<br>
@@ -2481,7 +2384,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMeasuredClassNUM</span>(class)
@@ -2496,7 +2399,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewMeasuredScore"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewMeasuredScore</span></h5>
 <div class="sect5">
-<h6 id="_short_description_34">Short description</h6>
+<h6 id="_short_description_33">Short description</h6>
 <div class="paragraph">
 <p>Notify measured score of currently selected instance.</p>
 </div>
@@ -2529,7 +2432,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMeasuredScore</span>(score)
@@ -2544,7 +2447,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewMeasuredScoreNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewMeasuredScoreNUM</span></h5>
 <div class="sect5">
-<h6 id="_short_description_35">Short description</h6>
+<h6 id="_short_description_34">Short description</h6>
 <div class="paragraph">
 <p>Example of dynamically created event to notify measured score of instance.<br>
 NUM will be replaced by the number of instance (e.g. "OnNewMeasuredScore1").<br>
@@ -2579,7 +2482,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMeasuredScoreNUM</span>(score)
@@ -2594,7 +2497,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewModelFilename"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewModelFilename</span></h5>
 <div class="sect5">
-<h6 id="_short_description_36">Short description</h6>
+<h6 id="_short_description_35">Short description</h6>
 <div class="paragraph">
 <p>Notify currently set model filename.</p>
 </div>
@@ -2627,7 +2530,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_34">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewModelFilename</span>(filename)
@@ -2642,7 +2545,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewModelLabels"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewModelLabels</span></h5>
 <div class="sect5">
-<h6 id="_short_description_37">Short description</h6>
+<h6 id="_short_description_36">Short description</h6>
 <div class="paragraph">
 <p>Notify labels of the currently set model.</p>
 </div>
@@ -2675,7 +2578,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_35">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_34">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewModelLabels</span>(labels)
@@ -2690,7 +2593,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewModelList"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewModelList</span></h5>
 <div class="sect5">
-<h6 id="_short_description_38">Short description</h6>
+<h6 id="_short_description_37">Short description</h6>
 <div class="paragraph">
 <p>Notify list of available models.</p>
 </div>
@@ -2723,7 +2626,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_36">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_35">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewModelList</span>(list)
@@ -2738,7 +2641,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewNumberOfInstances"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewNumberOfInstances</span></h5>
 <div class="sect5">
-<h6 id="_short_description_39">Short description</h6>
+<h6 id="_short_description_38">Short description</h6>
 <div class="paragraph">
 <p>Notifies about the number of instances.</p>
 </div>
@@ -2771,7 +2674,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_37">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_36">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewNumberOfInstances</span>(numberOfInstances)
@@ -2786,7 +2689,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewParameterName"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewParameterName</span></h5>
 <div class="sect5">
-<h6 id="_short_description_40">Short description</h6>
+<h6 id="_short_description_39">Short description</h6>
 <div class="paragraph">
 <p>Notify name of the parameters if saved/loaded via the CSK_PersistentData module for currently selected camera instance.</p>
 </div>
@@ -2819,7 +2722,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_38">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_37">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewParameterName</span>(parametersName)
@@ -2834,7 +2737,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewResult"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewResult</span></h5>
 <div class="sect5">
-<h6 id="_short_description_41">Short description</h6>
+<h6 id="_short_description_40">Short description</h6>
 <div class="paragraph">
 <p>Notify result of currently selected instance.</p>
 </div>
@@ -2867,7 +2770,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_39">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_38">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewResult</span>(result)
@@ -2882,7 +2785,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewResultNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewResultNUM</span></h5>
 <div class="sect5">
-<h6 id="_short_description_42">Short description</h6>
+<h6 id="_short_description_41">Short description</h6>
 <div class="paragraph">
 <p>Example of dynamically created event to notify result if the class for this instance was determined with the necessary score.<br>
 NUM will be replaced by the number of instance (e.g. "OnNewResult1").<br>
@@ -2917,7 +2820,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_40">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_39">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewResultNUM</span>(result)
@@ -2932,7 +2835,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewSelectedInstance"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewSelectedInstance</span></h5>
 <div class="sect5">
-<h6 id="_short_description_43">Short description</h6>
+<h6 id="_short_description_42">Short description</h6>
 <div class="paragraph">
 <p>Notify selected instance.</p>
 </div>
@@ -2965,7 +2868,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_41">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_40">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewSelectedInstance</span>(selectedDeepLearning)
@@ -2980,9 +2883,9 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewSelectedModel"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewSelectedModel</span></h5>
 <div class="sect5">
-<h6 id="_short_description_44">Short description</h6>
+<h6 id="_short_description_43">Short description</h6>
 <div class="paragraph">
-<p>Notify currently selected DNN model.</p>
+<p>Notify currently selected Deep Neural Network (DNN) model.</p>
 </div>
 </div>
 <div class="sect5">
@@ -3013,7 +2916,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_42">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_41">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewSelectedModel</span>(model)
@@ -3028,7 +2931,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusCSKStyle"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusCSKStyle</span></h5>
 <div class="sect5">
-<h6 id="_short_description_45">Short description</h6>
+<h6 id="_short_description_44">Short description</h6>
 <div class="paragraph">
 <p>Notify UI style to use for CSK modules.</p>
 </div>
@@ -3061,7 +2964,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_43">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_42">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCSKStyle</span>(theme)
@@ -3076,7 +2979,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusFlowConfigPriority"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusFlowConfigPriority</span></h5>
 <div class="sect5">
-<h6 id="_short_description_46">Short description</h6>
+<h6 id="_short_description_45">Short description</h6>
 <div class="paragraph">
 <p>Notify if FlowConfig should have priority for FlowConfig relevant configurations.</p>
 </div>
@@ -3109,7 +3012,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_44">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_43">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusFlowConfigPriority</span>(status)
@@ -3124,7 +3027,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusForwardImage"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusForwardImage</span></h5>
 <div class="sect5">
-<h6 id="_short_description_47">Short description</h6>
+<h6 id="_short_description_46">Short description</h6>
 <div class="paragraph">
 <p>Notify if image should be forwarded with result.</p>
 </div>
@@ -3157,7 +3060,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_45">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_44">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusForwardImage</span>(status)
@@ -3172,7 +3075,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_48">Short description</h6>
+<h6 id="_short_description_47">Short description</h6>
 <div class="paragraph">
 <p>Notify status if parameters should be loaded on app/device boot up.</p>
 </div>
@@ -3205,7 +3108,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_46">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_45">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLoadParameterOnReboot</span>(status)
@@ -3220,7 +3123,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusModuleIsActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusModuleIsActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_49">Short description</h6>
+<h6 id="_short_description_48">Short description</h6>
 <div class="paragraph">
 <p>Notify if module can be used on device.</p>
 </div>
@@ -3253,7 +3156,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_47">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_46">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleIsActive</span>(status)
@@ -3268,7 +3171,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusModuleVersion"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusModuleVersion</span></h5>
 <div class="sect5">
-<h6 id="_short_description_50">Short description</h6>
+<h6 id="_short_description_49">Short description</h6>
 <div class="paragraph">
 <p>Notify version of module.</p>
 </div>
@@ -3301,7 +3204,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_48">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_47">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleVersion</span>(version)
@@ -3316,7 +3219,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusProcessWithScores"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusProcessWithScores</span></h5>
 <div class="sect5">
-<h6 id="_short_description_51">Short description</h6>
+<h6 id="_short_description_50">Short description</h6>
 <div class="paragraph">
 <p>Notify if the scores for all classes should be returned in the processing result.</p>
 </div>
@@ -3349,7 +3252,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_49">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_48">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusProcessWithScores</span>(status)
@@ -3364,7 +3267,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusRegisteredEvent"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusRegisteredEvent</span></h5>
 <div class="sect5">
-<h6 id="_short_description_52">Short description</h6>
+<h6 id="_short_description_51">Short description</h6>
 <div class="paragraph">
 <p>Notify event instance is registered to receive new image to process.</p>
 </div>
@@ -3397,7 +3300,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_50">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_49">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusRegisteredEvent</span>(eventname)
@@ -3412,7 +3315,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusShowImage"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusShowImage</span></h5>
 <div class="sect5">
-<h6 id="_short_description_53">Short description</h6>
+<h6 id="_short_description_52">Short description</h6>
 <div class="paragraph">
 <p>Notify status if image should be shown in UI viewer of this module.</p>
 </div>
@@ -3445,7 +3348,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_51">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_50">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusShowImage</span>(status)
@@ -3460,7 +3363,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewStatusSortResultByIndex"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewStatusSortResultByIndex</span></h5>
 <div class="sect5">
-<h6 id="_short_description_54">Short description</h6>
+<h6 id="_short_description_53">Short description</h6>
 <div class="paragraph">
 <p>Notify if the processing result should be sorted by class index instead of highest score.</p>
 </div>
@@ -3493,7 +3396,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_52">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_51">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSortResultByIndex</span>(status)
@@ -3508,7 +3411,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewUploadPath"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewUploadPath</span></h5>
 <div class="sect5">
-<h6 id="_short_description_55">Short description</h6>
+<h6 id="_short_description_54">Short description</h6>
 <div class="paragraph">
 <p>Notify upload path for the models.</p>
 </div>
@@ -3541,7 +3444,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_53">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_52">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewUploadPath</span>(path)
@@ -3556,7 +3459,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewValidScore"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewValidScore</span></h5>
 <div class="sect5">
-<h6 id="_short_description_56">Short description</h6>
+<h6 id="_short_description_55">Short description</h6>
 <div class="paragraph">
 <p>Notify currently set score to be valid.</p>
 </div>
@@ -3589,7 +3492,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_54">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_53">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewValidScore</span>(score)
@@ -3604,7 +3507,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewValueToForwardNUM"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewValueToForwardNUM</span></h5>
 <div class="sect5">
-<h6 id="_short_description_57">Short description</h6>
+<h6 id="_short_description_56">Short description</h6>
 <div class="paragraph">
 <p>Example of dynamically created event to Forward thread internal values to e.g. be notified with single event related to UI.<br>
 NUM will be replaced by the number of instance (e.g. "OnNewValueToForward1").<br>
@@ -3645,7 +3548,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_55">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_54">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewValueToForwardNUM</span>(event, value)
@@ -3660,7 +3563,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnNewViewerID"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnNewViewerID</span></h5>
 <div class="sect5">
-<h6 id="_short_description_58">Short description</h6>
+<h6 id="_short_description_57">Short description</h6>
 <div class="paragraph">
 <p>Notify currently used viewerID (e.g. to show correct viewer in UI).</p>
 </div>
@@ -3693,7 +3596,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_56">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_55">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewViewerID</span>(viewerID)
@@ -3708,7 +3611,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnPersistentDataModuleAvailable</span></h5>
 <div class="sect5">
-<h6 id="_short_description_59">Short description</h6>
+<h6 id="_short_description_58">Short description</h6>
 <div class="paragraph">
 <p>Notify status if features of CSK_PersistentData module are available.</p>
 </div>
@@ -3741,7 +3644,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_57">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_56">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnPersistentDataModuleAvailable</span>(status)
@@ -3756,7 +3659,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnUserLevelAdminActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnUserLevelAdminActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_60">Short description</h6>
+<h6 id="_short_description_59">Short description</h6>
 <div class="paragraph">
 <p>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
@@ -3789,7 +3692,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_58">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_57">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelAdminActive</span>(status)
@@ -3804,7 +3707,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnUserLevelMaintenanceActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnUserLevelMaintenanceActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_61">Short description</h6>
+<h6 id="_short_description_60">Short description</h6>
 <div class="paragraph">
 <p>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
@@ -3837,7 +3740,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_59">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_58">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelMaintenanceActive</span>(status)
@@ -3852,7 +3755,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnUserLevelOperatorActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnUserLevelOperatorActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_62">Short description</h6>
+<h6 id="_short_description_61">Short description</h6>
 <div class="paragraph">
 <p>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
@@ -3885,7 +3788,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_60">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_59">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelOperatorActive</span>(status)
@@ -3900,7 +3803,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.OnUserLevelServiceActive"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">OnUserLevelServiceActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_63">Short description</h6>
+<h6 id="_short_description_62">Short description</h6>
 <div class="paragraph">
 <p>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
@@ -3933,7 +3836,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_61">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_60">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelServiceActive</span>(status)
@@ -3948,7 +3851,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MultiDeepLearning.TestImage"><span class="breadcrumb">CSK_MultiDeepLearning.</span><span class="api-event">TestImage</span></h5>
 <div class="sect5">
-<h6 id="_short_description_64">Short description</h6>
+<h6 id="_short_description_63">Short description</h6>
 <div class="paragraph">
 <p>Internal test event to provide an image to process (as an example).</p>
 </div>
@@ -3982,7 +3885,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_62">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_61">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleTestImage</span>(img)
@@ -3999,7 +3902,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MultiDeepLearning_FC"><span class="api-crown">MultiDeepLearning_FC</span></h3>
 <div class="sect3">
-<h4 id="_short_description_65">Short description</h4>
+<h4 id="_short_description_64">Short description</h4>
 <div class="paragraph">
 <p>Crown to provide CSK_FlowConfig relevant features.</p>
 </div>
@@ -4012,7 +3915,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MultiDeepLearning_FC.ImageSource"><span class="api-crown">MultiDeepLearning_FC.ImageSource</span></h3>
 <div class="sect3">
-<h4 id="_short_description_66">Short description</h4>
+<h4 id="_short_description_65">Short description</h4>
 <div class="paragraph">
 <p>Set source of images to process.</p>
 </div>
@@ -4035,13 +3938,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.ImageSource.create"><span class="breadcrumb">MultiDeepLearning_FC.ImageSource.</span><span class="api-function">create()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_67">Short description</h6>
+<h6 id="_short_description_66">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig create function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_18">Parameters</h6>
+<h6 id="_parameters_17">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4062,13 +3965,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance (must be &gt;=1).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_9">Return values</h6>
+<h6 id="_return_values_8">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4095,7 +3998,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_63">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_62">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">handle = MultiDeepLearning_FC.ImageSource.create(Instance)</code></pre>
@@ -4106,13 +4009,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.ImageSource.imageSource"><span class="breadcrumb">MultiDeepLearning_FC.ImageSource.</span><span class="api-function">imageSource()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_68">Short description</h6>
+<h6 id="_short_description_67">Short description</h6>
 <div class="paragraph">
 <p>Set source of images to process.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_19">Parameters</h6>
+<h6 id="_parameters_18">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4147,7 +4050,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_64">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_63">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">MultiDeepLearning_FC.ImageSource.imageSource(handle, imageSource)</code></pre>
@@ -4160,7 +4063,7 @@ Parameter:
 <div class="sect2">
 <h3 id="API:Crown:MultiDeepLearning_FC.OnNewResult"><span class="api-crown">MultiDeepLearning_FC.OnNewResult</span></h3>
 <div class="sect3">
-<h4 id="_short_description_69">Short description</h4>
+<h4 id="_short_description_68">Short description</h4>
 <div class="paragraph">
 <p>Provide result of classification.</p>
 </div>
@@ -4186,13 +4089,13 @@ Parameter:
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.OnNewResult.create"><span class="breadcrumb">MultiDeepLearning_FC.OnNewResult.</span><span class="api-function">create()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_70">Short description</h6>
+<h6 id="_short_description_69">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig create function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_20">Parameters</h6>
+<h6 id="_parameters_19">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4213,7 +4116,7 @@ Parameter:
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance (must be &gt;=1).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mode</p></td>
@@ -4228,7 +4131,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_10">Return values</h6>
+<h6 id="_return_values_9">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4255,7 +4158,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_65">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_64">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">handle = MultiDeepLearning_FC.OnNewResult.create(Instance, Mode)</code></pre>
@@ -4266,13 +4169,13 @@ Parameter:
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.OnNewResult.register"><span class="breadcrumb">MultiDeepLearning_FC.OnNewResult.</span><span class="api-function">register()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_71">Short description</h6>
+<h6 id="_short_description_70">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig register function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_21">Parameters</h6>
+<h6 id="_parameters_20">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4311,7 +4214,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_11">Return values</h6>
+<h6 id="_return_values_10">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4338,7 +4241,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_66">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_65">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">success = MultiDeepLearning_FC.OnNewResult.register(handle, eventname, callback)</code></pre>
@@ -4352,7 +4255,7 @@ Parameter:
 <div class="sect4">
 <h5 id="API:Event:MultiDeepLearning_FC.OnNewResult.OnNewResult"><span class="breadcrumb">MultiDeepLearning_FC.OnNewResult.</span><span class="api-event">OnNewResult</span></h5>
 <div class="sect5">
-<h6 id="_short_description_72">Short description</h6>
+<h6 id="_short_description_71">Short description</h6>
 <div class="paragraph">
 <p>Provide result of classification.</p>
 </div>
@@ -4393,7 +4296,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_67">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_66">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewResult</span>(handle, OnNewResult)
@@ -4410,7 +4313,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MultiDeepLearning_FC.Process"><span class="api-crown">MultiDeepLearning_FC.Process</span></h3>
 <div class="sect3">
-<h4 id="_short_description_73">Short description</h4>
+<h4 id="_short_description_72">Short description</h4>
 <div class="paragraph">
 <p>Set source of images to process and provide classification result.</p>
 </div>
@@ -4433,13 +4336,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.Process.create"><span class="breadcrumb">MultiDeepLearning_FC.Process.</span><span class="api-function">create()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_74">Short description</h6>
+<h6 id="_short_description_73">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig create function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_22">Parameters</h6>
+<h6 id="_parameters_21">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4460,7 +4363,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance (must be &gt;=1).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric identifier of processing instance.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mode</p></td>
@@ -4475,7 +4378,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_12">Return values</h6>
+<h6 id="_return_values_11">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4502,7 +4405,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_68">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_67">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">handle = MultiDeepLearning_FC.Process.create(Instance, Mode)</code></pre>
@@ -4513,13 +4416,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MultiDeepLearning_FC.Process.process"><span class="breadcrumb">MultiDeepLearning_FC.Process.</span><span class="api-function">process()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_75">Short description</h6>
+<h6 id="_short_description_74">Short description</h6>
 <div class="paragraph">
 <p>Set source of images to process and provide classification result.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_23">Parameters</h6>
+<h6 id="_parameters_22">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4554,7 +4457,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_return_values_13">Return values</h6>
+<h6 id="_return_values_12">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4583,7 +4486,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_69">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_68">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">OnNewResult = MultiDeepLearning_FC.Process.process(handle, imageSource)</code></pre>
@@ -4651,7 +4554,7 @@ Parameter:
 <div id="footer">
 <div id="footer-text">
 Version 5.0.0<br>
-Last updated 2024-08-14 16:02:51 +0200
+Last updated 2024-10-11 11:21:14 +0200
 </div>
 </div>
 <script type="text/javascript">

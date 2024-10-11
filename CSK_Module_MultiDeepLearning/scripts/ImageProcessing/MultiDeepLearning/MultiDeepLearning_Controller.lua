@@ -28,7 +28,6 @@ local helperFuncs = require('ImageProcessing/MultiDeepLearning/helper/funcs') --
 local function emptyFunction()
 end
 Script.serveFunction("CSK_MultiDeepLearning.processImageNUM", emptyFunction)
-Script.serveFunction("CSK_MultiDeepLearning.processImageWithScoresNUM", emptyFunction)
 
 Script.serveEvent("CSK_MultiDeepLearning.OnNewMeasuredClassNUM", "MultiDeepLearning_OnNewMeasuredClassNUM")
 Script.serveEvent("CSK_MultiDeepLearning.OnNewMeasuredScoreNUM", "MultiDeepLearning_OnNewMeasuredScoreNUM")
@@ -162,7 +161,7 @@ end
 --- Function to send all relevant values to UI on resume
 local function handleOnExpiredTmrMultiDeepLearning()
 
-  Script.notifyEvent('MultiDeepLearning_OnNewStatusModuleVersion', multiDeepLearning_Model.version)
+  Script.notifyEvent('MultiDeepLearning_OnNewStatusModuleVersion', 'v' .. multiDeepLearning_Model.version)
   Script.notifyEvent('MultiDeepLearning_OnNewStatusCSKStyle', multiDeepLearning_Model.styleForUI)
   Script.notifyEvent("MultiDeepLearning_OnNewStatusModuleIsActive", _G.availableAPIs.default and _G.availableAPIs.specific)
 
@@ -230,7 +229,11 @@ end
 Script.serveFunction("CSK_MultiDeepLearning.setInstance", setInstance)
 
 local function getInstancesAmount ()
-  return #multiDeepLearning_Instances
+  if multiDeepLearning_Instances then
+    return #multiDeepLearning_Instances
+  else
+    return 0
+  end
 end
 Script.serveFunction("CSK_MultiDeepLearning.getInstancesAmount", getInstancesAmount)
 

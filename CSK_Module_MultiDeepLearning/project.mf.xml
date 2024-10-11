@@ -21,7 +21,7 @@ Typically to configure this module to work with other modules you should do this
                     <param desc="List of models." multiplicity="+" name="list" type="string"/>
                 </event>
                 <event name="OnNewSelectedModel">
-                    <desc>Notify currently selected DNN model.</desc>
+                    <desc>Notify currently selected Deep Neural Network (DNN) model.</desc>
                     <param desc="Model" multiplicity="1" name="model" type="string"/>
                 </event>
                 <event name="OnNewModelFilename">
@@ -193,7 +193,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                     <param desc="Status of success." multiplicity="1" name="status" type="bool"/>
                 </function>
                 <function name="setModelByName">
-                    <desc>Set DNN model to use.</desc>
+                    <desc>Set Deep Neural Network (DNN) model to use.</desc>
                     <param desc="Model name" multiplicity="1" name="modelName" type="string"/>
                 </function>
                 <function name="downloadFromDevice">
@@ -209,7 +209,7 @@ INFO: Other modules can check via "Script.isServedAsEvent" if event of sepecific
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </function>
                 <function name="processImageNUM">
-                    <desc>Example of dynamically served function to process DNN on an image. +
+                    <desc>Example of dynamically served function to execute Deep Neural Network (DNN) on an image. +
 NUM will be replaced by the number of instance (e.g. "processImage1"). +
 INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
 Needs then to be called via "Script.callFunction()" (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu) +</desc>
@@ -237,17 +237,6 @@ Needs then to be called via "Script.callFunction()" (INFO: By using this, the fi
                 <function name="getInstancesAmount">
                     <desc>Get amount of created DeepLearning instances.</desc>
                     <return desc="Amount" multiplicity="1" name="amount" type="int"/>
-                </function>
-                <function name="processImageWithScoresNUM">
-                    <desc>Example of dynamically served function to process DNN on an image and return the scores for each class. +
-NUM will be replaced by the number of instance (e.g. "processImageWithScores1"). +
-INFO: Other modules can check via "Script.isServedAsFunction" if function of sepecific instance exists. +
-Needs then to be called via "Script.callFunction()"  (INFO: By using this, the first return value is just the "success" of this callFunction(), see AppEngine docu). +</desc>
-                    <param alias="Image" desc="Image to process." multiplicity="1" name="image" type="object"/>
-                    <param desc="Sort results by descending score instead of class number." multiplicity="1" name="sorted" type="bool"/>
-                    <return desc="Result score acceptable." multiplicity="[?*]" name="validScore" type="bool"/>
-                    <return desc="Scores for each class as array (sorted by class number per default)." multiplicity="[?*]" name="score" type="float"/>
-                    <return desc="Names of each class as a table (sorted by class number per default)." multiplicity="[?*]" name="class" type="string"/>
                 </function>
                 <function name="addInstance">
                     <desc>Function to add an additional deepLearning instance.</desc>
@@ -313,7 +302,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                 <serves>
                     <function name="create">
                         <desc>Internally used CSK_FlowConfig create function.</desc>
-                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <param constraint="1-99" desc="Numeric identifier of processing instance." multiplicity="1" name="Instance" type="int"/>
                         <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
                     </function>
                     <function name="imageSource">
@@ -337,7 +326,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                     <function name="create">
                         <trait>released</trait>
                         <desc>Internally used CSK_FlowConfig create function.</desc>
-                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <param constraint="1-99" desc="Numeric identifier of processing instance." multiplicity="1" name="Instance" type="int"/>
                         <param desc="Mode of result to provide.&#10;&#10;'CLASS' = Measured class&#10;&#10;'CLASS_VALID' = Class was measured with necessary score" multiplicity="1" name="Mode" ref="MultiDeepLearning_FC.ResultType" type="enum"/>
                         <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
                     </function>
@@ -358,7 +347,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
                     <function name="create">
                         <trait>released</trait>
                         <desc>Internally used CSK_FlowConfig create function.</desc>
-                        <param desc="Numeric identifier of processing instance (must be &gt;=1)." multiplicity="1" name="Instance" type="int"/>
+                        <param constraint="1-99" desc="Numeric identifier of processing instance." multiplicity="1" name="Instance" type="int"/>
                         <param desc="Mode of result to provide.&#10;&#10;'CLASS' = Measured class&#10;&#10;'CLASS_VALID' = Class was measured with necessary score" multiplicity="1" name="Mode" ref="MultiDeepLearning_FC.ResultType" type="enum"/>
                         <return desc="Handle to internally used FlowConfig instance." multiplicity="1" name="handle" type="handle"/>
                     </function>

@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 
 ### Bugfix
 - Never deregistered from events
+- Error if module is not active but 'getInstancesAmount' was called
+- processImageNUM did not work after deregistering from event to process images
 
 ## Release 4.1.0
 
