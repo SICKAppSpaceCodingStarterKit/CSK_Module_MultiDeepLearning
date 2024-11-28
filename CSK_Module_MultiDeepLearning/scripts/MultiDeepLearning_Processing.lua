@@ -50,7 +50,7 @@ end
 
 --- Function to process incoming images with DNN
 local function handleOnNewImageProcessing(image)
-  
+
   _G.logger:fine(nameOfModule .. ": Check DeepLearning image on instance No." .. deepLearningInstanceNumberString)
   if imageProcessingParams.showImage and imageProcessingParams.activeInUI then
     viewer:addImage(image)
@@ -139,11 +139,18 @@ local function handleOnNewImageProcessing(image)
     if imageProcessingParams.activeInUI then
       Script.notifyEvent('MultiDeepLearning_OnNewValueToForward' .. deepLearningInstanceNumberString, 'MultiDeepLearning_OnNewResult', false)
     end
-    _G.logger:info(nameOfModule .. ": No results available")
+    _G.logger:fine(nameOfModule .. ": No results available")
     return false, nil, nil
   end
 end
 Script.serveFunction("CSK_MultiDeepLearning.processImage"..deepLearningInstanceNumberString, handleOnNewImageProcessing, 'object:1:Image', 'bool:?,float:[?*],string:[?*]')
+
+--- Function only used to forward the content from events to the served function.
+--- This is only needed, as deregistering from the event would internally release the served function and would make it uncallable from external.
+---@param image Image Image to process
+local function tempHandleOnNewImageProcessing(image)
+  handleOnNewImageProcessing(image)
+end
 
 --- Function to handle updates of processing parameters from Controller
 ---@param deepLearningNo int Number of instance to update
@@ -157,18 +164,28 @@ local function handleOnNewImageProcessingParameter(deepLearningNo, parameter, va
     if parameter == 'registeredEvent' then
       _G.logger:fine(nameOfModule .. ": Register DNN instance " .. deepLearningInstanceNumberString .. " on event " .. value)
       if imageProcessingParams.registeredEvent ~= '' then
-         Script.deregister(imageProcessingParams.registeredEvent, handleOnNewImageProcessing)
+        Script.deregister(imageProcessingParams.registeredEvent, tempHandleOnNewImageProcessing)
       end
       imageProcessingParams.registeredEvent = value
-      Script.register(value, handleOnNewImageProcessing)
+      Script.register(value, tempHandleOnNewImageProcessing)
+
+    elseif parameter == 'deregisterFromEvent' then
+      _G.logger:fine(nameOfModule .. ": Deregister instance " .. deepLearningInstanceNumberString .. " from event.")
+      Script.deregister(imageProcessingParams.registeredEvent, tempHandleOnNewImageProcessing)
+      imageProcessingParams.registeredEvent = ''
 
     elseif parameter == 'fullModelPath' then
 
       -- Setting new model for DNN
       imageProcessingParams.fullModelPath = value
-      local model = Object.load(imageProcessingParams.fullModelPath)
-      local suc = dnn:setModel(model)
-      _G.logger:fine(nameOfModule .. ": Success of setting new model = " .. tostring(suc))
+      local checkFile = File.exists(imageProcessingParams.fullModelPath)
+      if checkFile then
+        local model = Object.load(imageProcessingParams.fullModelPath)
+        local suc = dnn:setModel(model)
+        _G.logger:fine(nameOfModule .. ": Success of setting new model = " .. tostring(suc))
+      else
+        _G.logger:info(nameOfModule .. ": No model to load.")
+      end
 
     else
       imageProcessingParams[parameter] = value

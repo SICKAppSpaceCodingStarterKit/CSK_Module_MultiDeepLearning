@@ -1,6 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 5.0.0
+
+### New features
+- Supports FlowConfig feature to set images to process / provide results
+- Provide version of module via 'OnNewStatusModuleVersion'
+- Function 'getParameters' to provide PersistentData parameters
+- Check if features of module can be used on device and provide this via 'OnNewStatusModuleIsActive' event / 'getStatusModuleActive' function
+- Function to 'resetModule' to default setup
+
+### Improvements
+- New UI design available (e.g. selectable via CSK_Module_PersistentData v4.1.0 or higher), see 'OnNewStatusCSKStyle'
+- check if instance exists if selected
+- check if models exist in selected folder
+- 'loadParameters' returns its success
+- 'sendParameters' can control if sent data should be saved directly by CSK_Module_PersistentData
+- Changed log level of some messages from 'info' to 'fine'
+- Sample images converted to JPG
+- Added UI icon and browser tab information
+
+### Bugfix
+- Never deregistered from events
+- Error if module is not active but 'getInstancesAmount' was called
+- processImageNUM did not work after deregistering from event to process images
+
 ## Release 4.1.0
 
 ### New features
