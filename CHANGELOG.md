@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 5.1.0
+
+### New features
+- Check if persistent data to load provides all relevant parameters. Otherwise add default values
+
+### Improvements
+- Better instance handling regarding FlowConfig
+
+### Bugfix
+- Legacy bindings of ValueDisplay elements and FileUpload feature within UI did not work if deployed with VS Code AppSpace SDK
+- UI differs if deployed via Appstudio or VS Code AppSpace SDK
+- Fullscreen icon of iFrame was visible
+
 ## Release 5.0.0
 
 ### New features
@@ -17,7 +30,7 @@ All notable changes to this project will be documented in this file.
 - 'loadParameters' returns its success
 - 'sendParameters' can control if sent data should be saved directly by CSK_Module_PersistentData
 - Changed log level of some messages from 'info' to 'fine'
-- Sample images converted to JPG
+- Sample images moved to CSK_Module_ImagePlayer app
 - Added UI icon and browser tab information
 
 ### Bugfix

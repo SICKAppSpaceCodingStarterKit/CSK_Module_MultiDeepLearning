@@ -7,6 +7,8 @@
 --**********************Start Global Scope *********************************
 --**************************************************************************
 
+local nameOfModule = 'CSK_MultiDeepLearning'
+
 local funcs = {}
 
 -- Get SIM type / firmware to adapt device specific parameters
@@ -28,6 +30,8 @@ end
 
 -- Providing standard JSON functions
 funcs.json = require('ImageProcessing/MultiDeepLearning/helper/Json')
+-- Default parameters for instances of module
+funcs.defaultParameters = require('ImageProcessing/MultiDeepLearning/MultiDeepLearning_Parameters')
 
 --- Function to create a list with numbers
 ---@param size number Size of the list
@@ -203,6 +207,27 @@ local function checkFirmware(checkDevice, checkMajor, checkMinor, checkPatch)
   return firmwareOK
 end
 funcs.checkFirmware = checkFirmware
+
+--- Function to compare table content. Optionally will fill missing values within content table with values of defaultTable
+---@param content auto Data to check
+---@param defaultTable auto Reference data
+---@return auto[] content Update of data
+local function checkParameters(content, defaultTable)
+  for key, value in pairs(defaultTable) do
+    if type(value) == 'table' then
+      if content[key] == nil then
+        _G.logger:info(nameOfModule .. ": Created missing parameters table '" .. tostring(key) .. "'")
+        content[key] = {}
+      end
+      content[key] = checkParameters(content[key], defaultTable[key])
+    elseif content[key] == nil then
+      _G.logger:info(nameOfModule .. ": Missing parameter '" .. tostring(key) .. "'. Adding default value '" .. tostring(defaultTable[key]) .. "'")
+      content[key] = defaultTable[key]
+    end
+  end
+  return content
+end
+funcs.checkParameters = checkParameters
 
 return funcs
 

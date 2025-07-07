@@ -362,7 +362,7 @@ IMPORTANT: As instances start their own threads, the module needs to be restarte
             </crown>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">5.0.0</meta>
+        <meta key="version">5.1.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
