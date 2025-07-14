@@ -1,6 +1,7 @@
-.myViewer_CSK_Module_MultiDeepLearning > div > div {
-  max-height: 600px;
-  min-height: 600px;
+.myViewer_CSK_Module_MultiDeepLearning {
+  width: 98%;
+  height: 600px;
+  margin: auto;
 }
 
 .myCustomSpacerVert10_CSK_Module_MultiDeepLearning {
