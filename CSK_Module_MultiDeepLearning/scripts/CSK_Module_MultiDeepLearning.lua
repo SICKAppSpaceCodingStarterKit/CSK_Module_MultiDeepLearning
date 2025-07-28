@@ -52,10 +52,9 @@ local multiDeepLearning_Instances = {} -- Handle all instances
 local multiDeepLearningController = require('ImageProcessing/MultiDeepLearning/MultiDeepLearning_Controller')
 
 if _G.availableAPIs.default and _G.availableAPIs.specific then
-  local setInstanceHandle = require('ImageProcessing/MultiDeepLearning/FlowConfig/MultiDeepLearning_FlowConfig')
+  require('ImageProcessing/MultiDeepLearning/FlowConfig/MultiDeepLearning_FlowConfig')
   table.insert(multiDeepLearning_Instances, multiDeepLearning_Model.create(1)) -- create(deepLearningInstanceNo:int)
   multiDeepLearningController.setMultiDeepLearning_Instances_Handle(multiDeepLearning_Instances) -- share handle of instances
-  setInstanceHandle(multiDeepLearning_Instances)
 else
   _G.logger:warning("CSK_MultiDeepLearning: Relevant CROWN(s) not available on device. Module is not supported...")
 end
@@ -83,7 +82,7 @@ local function startProcessing()
   -- Option A --> prepare an event to trigger processing via this one
   -- Following event is already served inside of the Controler script
   -- --Script.serveEvent("CSK_MultiDeepLearning.TestImage", "TestImage") --> Create event to listen to receive a image to process
-  --CSK_MultiDeepLearning.setRegisterEvent('CSK_MultiDeepLearning.TestImage') --> Register processing to the event
+  --CSK_MultiDeepLearning.setRegisterEvent('CSK_ImagePlayer.OnNewImage') --> Register processing to the event
 
   for i = 1, 2 do
     local imgOK = Image.load('resources/CSK_Module_MultiDeepLearningSampleData/OK_' .. tostring(i) .. '.bmp')

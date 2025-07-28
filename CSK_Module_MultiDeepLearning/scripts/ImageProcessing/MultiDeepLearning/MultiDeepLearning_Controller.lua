@@ -375,9 +375,11 @@ Script.serveFunction('CSK_MultiDeepLearning.getStatusModuleActive', getStatusMod
 
 local function clearFlowConfigRelevantConfiguration()
   for i = 1, #multiDeepLearning_Instances do
-    multiDeepLearning_Instances[i].parameters.registeredEvent = ''
-    Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', i, 'deregisterFromEvent', '')
-    Script.notifyEvent('MultiDeepLearning_OnNewStatusRegisteredEvent', '')
+    if multiDeepLearning_Instances[i].parameters.flowConfigPriority then
+      multiDeepLearning_Instances[i].parameters.registeredEvent = ''
+      Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', i, 'deregisterFromEvent', '')
+      Script.notifyEvent('MultiDeepLearning_OnNewStatusRegisteredEvent', '')
+    end
   end
 end
 Script.serveFunction('CSK_MultiDeepLearning.clearFlowConfigRelevantConfiguration', clearFlowConfigRelevantConfiguration)
@@ -428,6 +430,9 @@ local function loadParameters()
     if data then
       _G.logger:info(nameOfModule .. ": Loaded parameters for deepLearningInstance " .. tostring(selectedInstance) .. " from CSK_PersistentData module.")
       multiDeepLearning_Instances[selectedInstance].parameters = helperFuncs.convertContainer2Table(data)
+
+      multiDeepLearning_Instances[selectedInstance].parameters = helperFuncs.checkParameters(multiDeepLearning_Instances[selectedInstance].parameters, helperFuncs.defaultParameters.getParameters())
+
       updateProcessingParameters()
       pageCalled()
       return true
@@ -513,7 +518,11 @@ Script.register("CSK_PersistentData.OnInitialDataLoaded", handleOnInitialDataLoa
 
 local function resetModule()
   if _G.availableAPIs.default and _G.availableAPIs.specific then
-    clearFlowConfigRelevantConfiguration()
+    for i = 1, #multiDeepLearning_Instances do
+      multiDeepLearning_Instances[i].parameters.registeredEvent = ''
+      Script.notifyEvent('MultiDeepLearning_OnNewImageProcessingParameter', i, 'deregisterFromEvent', '')
+      Script.notifyEvent('MultiDeepLearning_OnNewStatusRegisteredEvent', '')
+    end
     pageCalled()
   end
 end
